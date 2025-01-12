@@ -12,6 +12,30 @@ clear_lines() {
     done
 }
 
+# Function to validate duration
+validate_duration() {
+    local input=$1
+    if ! [[ "$input" =~ ^[0-9]+$ ]] || [ "$input" -le 0 ]; then
+        echo 30
+    else
+        echo "$input"
+    fi
+}
+
+# Function to close applications
+close_apps() {
+    local profile_path=$1
+    
+    # Close Chrome windows // TODO: Close specific profile only
+    osascript -e "tell application \"Google Chrome\" to quit"
+    
+    # Close other applications if provided
+    shift
+    for app in "$@"; do
+        osascript -e "tell application \"$app\" to quit"
+    done
+}
+
 # Function to open Chrome with specific profile and URLs in a single window
 open_chrome() {
     profile_path=$1
@@ -19,11 +43,11 @@ open_chrome() {
     first_url=$1
     shift
     
-    # Open first URL in a new window
+    # Open first URL in a new window and redirect output to /dev/null
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
         --profile-directory="$profile_path" \
         --new-window \
-        "$first_url" &
+        "$first_url" > /dev/null 2>&1 &
     
     # Wait a bit for the window to open
     sleep 2
@@ -33,7 +57,7 @@ open_chrome() {
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
             --profile-directory="$profile_path" \
             --new-tab \
-            "$url"
+            "$url" > /dev/null 2>&1
     done
 }
 
@@ -46,9 +70,13 @@ open_apps() {
 
 # Function to display countdown and menu
 display_countdown_and_menu() {
+    local profile_path=$1
+    shift
+    local apps=("$@")
+    
     # Initial display of menu options (only once)
     echo -e "\nTimer Control Menu:"
-    echo "1) Extend duration"
+    echo "1) Set new duration"
     echo "2) Close now"
     echo -e "\nTime remaining: calculating..."
     
@@ -57,7 +85,8 @@ display_countdown_and_menu() {
         remaining_seconds=$((end_time - current_time))
         
         if [ $remaining_seconds -le 0 ]; then
-            echo -e "\nTime's up! Returning to category selection..."
+            echo -e "\nTime's up! Closing applications..."
+            close_apps "$profile_path" "${apps[@]}"
             return
         fi
         
@@ -76,12 +105,13 @@ display_countdown_and_menu() {
             case $action in
                 1)
                     echo
-                    read -p "Enter additional minutes: " extra_duration
-                    new_duration=$(( (end_time - $(date +%s)) / 60 + extra_duration ))
+                    read -p "Enter new duration in minutes: " new_duration
+                    new_duration=$(validate_duration "$new_duration")
                     end_time=$(($(date +%s) + new_duration * 60))
                     ;;
                 2)
-                    echo -e "\nReturning to category selection..."
+                    echo -e "\nClosing applications..."
+                    close_apps "$profile_path" "${apps[@]}"
                     return
                     ;;
             esac
@@ -92,7 +122,7 @@ display_countdown_and_menu() {
 # Main loop for category selection
 while true; do
     clear
-    echo "Select category:"
+    echo "Select workspace:"
     echo "1) Condo"
     echo "2) Crypto"
     echo "3) Stock"
@@ -103,19 +133,27 @@ while true; do
 
     [ "$choice" = "6" ] && exit 0
 
-    # Get duration
-    read -p "Enter duration in minutes before auto-close: " duration
+    # Get duration with default value of 30 minutes
+    read -p "Enter duration in minutes before auto-close [30]: " duration
+    duration=${duration:-30}  # Set default to 30 if empty
+    duration=$(validate_duration "$duration")
 
+    # Store profile path and apps for the selected category
+    profile_path=""
+    apps=()
+    
     case $choice in
         1)  # Condo
-            open_chrome "Profile 12" \
+            profile_path="Profile 12"
+            open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
                 "https://business.facebook.com/latest/inbox/all/" \
                 "https://business.facebook.com/latest/content_calendar" \
                 "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw"
             ;;
         2)  # Crypto
-            open_chrome "Profile 15" \
+            profile_path="Profile 15"
+            open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
                 "https://coinmarketcap.com/portfolio-tracker/" \
                 "https://www.investagrams.com/News/" \
@@ -131,7 +169,8 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             ;;
         3)  # Stock
-            open_chrome "Profile 16" \
+            profile_path="Profile 16"
+            open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
                 "https://www.investagrams.com/News/" \
@@ -140,16 +179,20 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003"
             ;;
         4)  # Study
-            open_chrome "Profile 7" \
+            profile_path="Profile 7"
+            apps=("Cursor" "Visual Studio Code" "Notion")
+            open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
                 "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html" \
                 "https://www.linkedin.com/messaging/" \
                 "https://www.udemy.com/home/my-courses/learning/" \
                 "https://www.youtube.com/"
-            open_apps "Cursor" "Visual Studio Code" "Notion"
+            open_apps "${apps[@]}"
             ;;
         5)  # Budget
-            open_chrome "Profile 1" \
+            profile_path="Profile 1"
+            open_chrome "$profile_path" \
+                "https://pomofocus.io/app" \
                 "https://docs.google.com/spreadsheets/d/18_xpANJbYqf53RStc-x9bROy1Xjm04KB1s60yjOgF0E" \
                 "https://docs.google.com/spreadsheets/d/19H2ixczbupOp1O91Nh3IRRl-X2iVOSei50b1VtZugBw" \
                 "https://docs.google.com/spreadsheets/d/1VHLSZxaTcm7IKI16Wkz_PDw6S7ZQsohRGap15EhfjzM" \
@@ -164,6 +207,6 @@ while true; do
     # Set initial end time
     end_time=$(($(date +%s) + duration * 60))
 
-    # Start countdown and menu display
-    display_countdown_and_menu
+    # Start countdown and menu display with profile path and apps
+    display_countdown_and_menu "$profile_path" "${apps[@]}"
 done
