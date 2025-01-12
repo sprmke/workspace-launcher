@@ -167,6 +167,9 @@ while true; do
                 "https://www.youtube.com/" \
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M" \
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
+            profile_path="Profile 1"
+            open_chrome "$profile_path" \
+                "https://www.bitget.com/spot/BTCUSDT"
             ;;
         3)  # Stock
             profile_path="Profile 16"
