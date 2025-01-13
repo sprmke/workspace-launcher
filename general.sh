@@ -34,11 +34,14 @@ close_apps() {
     for app in "$@"; do
         osascript -e "tell application \"$app\" to quit"
     done
+
+    # Wait for the Chrome and applications to close
+    sleep 5
 }
 
 # Function to open Chrome with specific profile and URLs in a single window
 open_chrome() {
-    echo "Starting Chrome with specified URLs..."
+    echo "Starting Chrome with profile: $profile_path..."
     profile_path=$1
     shift
     first_url=$1
