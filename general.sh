@@ -38,6 +38,7 @@ close_apps() {
 
 # Function to open Chrome with specific profile and URLs in a single window
 open_chrome() {
+    echo "Starting Chrome with specified URLs..."
     profile_path=$1
     shift
     first_url=$1
@@ -63,6 +64,7 @@ open_chrome() {
 
 # Function to open applications
 open_apps() {
+    echo "Starting applications..."
     for app in "$@"; do
         osascript -e "tell application \"$app\" to activate"
     done

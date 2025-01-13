@@ -174,12 +174,14 @@ profile_path="Default"
 apps=("Windsurf" "Github Desktop" "Sublime Text" "Slack" "Teams")
 
 # Start the dev server
+echo "Starting dev server..."
 start_dev_server
 
 # Wait a bit for the dev server to start
 sleep 3
 
 # Open Chrome with specified profile and URLs
+echo "Starting Chrome with specified URLs..."
 open_chrome "$profile_path" \
     "http://localhost:5173/" \
     "https://trello.com/b/iWR71DXf/web-app" \
@@ -190,6 +192,7 @@ open_chrome "$profile_path" \
     "https://docs.google.com/document/d/1x5yYzUH71q0u-DhZt-8Oeh7SukuMSOoLr2f2jQvpxj4/edit?tab=t.0#heading=h.y7bxmbmchq97"
 
 # Open applications
+echo "Starting applications..."
 open_apps "${apps[@]}"
 
 # Set initial end time
