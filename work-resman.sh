@@ -43,6 +43,12 @@ validate_duration() {
 
 # Function to close specific terminal windows
 close_dev_terminals() {
+    # First kill any running dev processes
+    pkill -f "npm run dev"
+    
+    # Small delay to ensure processes are terminated
+    sleep 1
+    
     # Load any stored terminal IDs
     load_terminal_ids
 
@@ -53,7 +59,6 @@ close_dev_terminals() {
                     repeat with w in windows
                         if id of w is $window_id then
                             close w saving no
-                            exit repeat
                         end if
                     end repeat
                 end tell
@@ -64,9 +69,6 @@ EOF
     # Clear the window IDs array and temp file
     TERMINAL_WINDOW_IDS=()
     rm -f /tmp/dev_terminal_ids
-    
-    # Kill any remaining dev processes
-    pkill -f "npm run dev"
 }
 
 # Function to close applications
@@ -121,6 +123,8 @@ check_and_kill_ports() {
 
 # Function to start dev servers with improved error handling
 start_dev_servers() {
+    echo "Starting dev servers..."
+
     # Check and kill processes on specific ports
     check_and_kill_ports
 
@@ -141,7 +145,7 @@ start_dev_servers() {
             tell application "System Events" to keystroke "t" using command down
             delay 5
             do script "cd /Users/resman/Projects/resman-projects/zeki/packages/frontend && meteor run --settings settings-local.json" in window 1
-            
+            delay 5
             return win_id
         end tell
 EOF
@@ -266,18 +270,19 @@ duration=${duration:-30}  # Set default to 30 if empty
 duration=$(validate_duration "$duration")
 
 # Start the dev servers
-echo "Starting dev servers..."
 start_dev_servers
+
+# Wait for servers to start
+sleep 10
 
 # Open Chrome profile with specified URLs
 echo "Starting Chrome with specified URLs..."
 profile_path="Profile 12"
 open_chrome "$profile_path" \
-    "https://pomofocus.io/app" \
-    "https://chatgpt.com/" \
     "http://localhost:4000/" \
     "https://github.com/razzinteractive/zeki/pulls" \
-    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49"
+    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
+    "https://chatgpt.com/"
 
 # Open specified applications
 echo "Starting applications..."
