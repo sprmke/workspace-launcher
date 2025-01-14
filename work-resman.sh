@@ -273,10 +273,11 @@ start_dev_servers
 echo "Starting Chrome with specified URLs..."
 profile_path="Profile 12"
 open_chrome "$profile_path" \
+    "https://pomofocus.io/app" \
+    "https://chatgpt.com/" \
     "http://localhost:4000/" \
     "https://github.com/razzinteractive/zeki/pulls" \
-    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
-    "https://chatgpt.com/"
+    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49"
 
 # Open specified applications
 echo "Starting applications..."

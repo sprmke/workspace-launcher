@@ -152,14 +152,16 @@ while true; do
             profile_path="Profile 12"
             open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
+                "https://chatgpt.com/" \
                 "https://business.facebook.com/latest/inbox/all/" \
                 "https://business.facebook.com/latest/content_calendar" \
-                "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw"
+                "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw" \
             ;;
         2)  # Crypto
             profile_path="Profile 15"
             open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
+                "https://chatgpt.com/" \
                 "https://coinmarketcap.com/portfolio-tracker/" \
                 "https://www.investagrams.com/News/" \
                 "https://cryptopanic.com/" \
@@ -180,18 +182,22 @@ while true; do
             profile_path="Profile 16"
             open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
+                "https://chatgpt.com/" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
                 "https://www.investagrams.com/News/" \
-                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
-                "https://www.youtube.com/" \
                 "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003"
+                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
+                "https://trade.dragonfi.ph/" \
+                "https://www.youtube.com/"
             ;;
         4)  # Study
             profile_path="Profile 7"
             apps=("Cursor" "Visual Studio Code" "Notion")
             open_chrome "$profile_path" \
-                "https://pomofocus.io/app" \
                 "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html" \
+                "https://pomofocus.io/app" \
+                "https://chatgpt.com/" \
+                "https://claude.ai/" \
                 "https://www.linkedin.com/messaging/" \
                 "https://www.udemy.com/home/my-courses/learning/" \
                 "https://www.youtube.com/"
@@ -201,6 +207,7 @@ while true; do
             profile_path="Profile 1"
             open_chrome "$profile_path" \
                 "https://pomofocus.io/app" \
+                "https://chatgpt.com/" \
                 "https://docs.google.com/spreadsheets/d/18_xpANJbYqf53RStc-x9bROy1Xjm04KB1s60yjOgF0E" \
                 "https://docs.google.com/spreadsheets/d/19H2ixczbupOp1O91Nh3IRRl-X2iVOSei50b1VtZugBw" \
                 "https://docs.google.com/spreadsheets/d/1VHLSZxaTcm7IKI16Wkz_PDw6S7ZQsohRGap15EhfjzM" \
