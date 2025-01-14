@@ -185,7 +185,7 @@ while true; do
                 "https://chatgpt.com/" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
                 "https://www.investagrams.com/News/" \
-                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003"
+                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003" \
                 "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
                 "https://trade.dragonfi.ph/" \
                 "https://www.youtube.com/"
