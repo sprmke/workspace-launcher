@@ -155,7 +155,9 @@ while true; do
                 "https://chatgpt.com/" \
                 "https://business.facebook.com/latest/inbox/all/" \
                 "https://business.facebook.com/latest/content_calendar" \
-                "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw" \
+                "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw"
+            apps=("Adobe Photoshop 2024" "Messenger")
+            open_apps "${apps[@]}"
             ;;
         2)  # Crypto
             profile_path="Profile 15"
@@ -192,7 +194,6 @@ while true; do
             ;;
         4)  # Study
             profile_path="Profile 7"
-            apps=("Cursor" "Visual Studio Code" "Notion")
             open_chrome "$profile_path" \
                 "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html" \
                 "https://pomofocus.io/app" \
@@ -201,6 +202,7 @@ while true; do
                 "https://www.linkedin.com/messaging/" \
                 "https://www.udemy.com/home/my-courses/learning/" \
                 "https://www.youtube.com/"
+            apps=("Cursor" "Visual Studio Code" "Notion")
             open_apps "${apps[@]}"
             ;;
         5)  # Budget
