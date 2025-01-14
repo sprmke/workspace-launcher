@@ -183,13 +183,15 @@ sleep 3
 # Open Chrome with specified profile and URLs
 echo "Starting Chrome with specified URLs..."
 open_chrome "$profile_path" \
+    "https://pomofocus.io/app" \
+    "https://chatgpt.com/" \
     "http://localhost:5173/" \
     "https://trello.com/b/iWR71DXf/web-app" \
     "https://miro.com/app/board/uXjVPvGoz9U=/" \
     "https://bitbucket.org/auristech/fonetti-web/commits/branch/main" \
     "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors" \
     "https://docs.google.com/document/d/13vxiPW3W9snzwULGKxC34rY-Y9RpEEFuGpxWu5z6xG8/edit?tab=t.pd1f1vugt095#heading=h.mbkujqfm82" \
-    "https://docs.google.com/document/d/1x5yYzUH71q0u-DhZt-8Oeh7SukuMSOoLr2f2jQvpxj4/edit?tab=t.0#heading=h.y7bxmbmchq97"
+    "https://docs.google.com/document/d/1x5yYzUH71q0u-DhZt-8Oeh7SukuMSOoLr2f2jQvpxj4/edit?tab=t.0#heading=h.y7bxmbmchq97" 
 
 # Open applications
 echo "Starting applications..."
