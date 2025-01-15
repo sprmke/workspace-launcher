@@ -52,6 +52,7 @@ focus_terminal() {
 close_dev_terminals() {
     # First kill any running dev processes
     pkill -f "npm run dev"
+    pkill -f "meteor run"
     
     # Small delay to ensure processes are terminated
     sleep 1
@@ -63,11 +64,15 @@ close_dev_terminals() {
         if [ ! -z "$window_id" ]; then
             osascript <<EOF
                 tell application "Terminal"
-                    repeat with w in windows
-                        if id of w is $window_id then
-                            close w saving no
-                        end if
-                    end repeat
+                    try
+                        repeat with w in windows
+                            try
+                                if id of w is $window_id then
+                                    close w saving no
+                                end if
+                            end try
+                        end repeat
+                    end try
                 end tell
 EOF
         fi
@@ -128,6 +133,33 @@ check_and_kill_ports() {
     fi
 }
 
+# Function to load environment variables
+load_env_vars() {
+    # Check for Zeki environment file
+    if [ -f "/Users/resman/Projects/resman-projects/envs/.env.zeki" ]; then
+        export $(cat /Users/resman/Projects/resman-projects/envs/.env.zeki | xargs)
+    else
+        echo "Error: .env.zeki file not found in envs directory"
+        exit 1
+    fi
+
+    # Check for Zeki V2 environment file
+    if [ -f "/Users/resman/Projects/resman-projects/envs/.env.zeki-v2" ]; then
+        export $(cat /Users/resman/Projects/resman-projects/envs/.env.zeki-v2 | xargs)
+    else
+        echo "Error: .env.zeki-v2 file not found in envs directory"
+        exit 1
+    fi
+
+    # Check for MyRazz SSR environment file 
+    if [ -f "/Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr" ]; then
+        export $(cat /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr | xargs)
+    else
+        echo "Error: .env.myrazz-ssr file not found in envs directory"
+        exit 1
+    fi
+}
+
 # Function to start dev servers with improved error handling
 start_dev_servers() {
     echo "Starting dev servers..."
@@ -146,12 +178,12 @@ start_dev_servers() {
             set win_id to id of window 1
             
             # First tab - Zeki Dashboard
-            do script "cd /Users/resman/Projects/resman-projects/zeki/packages/dashboard && pkill -f 'meteor run' || true && sleep 2 && DEBUG= DEBUG_COLORS=1 MONGODB_FRONTEND_URI=mongodb://localhost:3001/meteor MONGODB_FRONTEND_V2_URI=mongodb://localhost:27018/sites SERVICES=cron,lead,conversation,email,importer,app,share,siteImporter,taskScheduler,taskRunner,appList,library,imageUploadQueue,migration,layer,integrationScheduler meteor run --settings settings-local.json --port 4000" in win
+            do script "cd /Users/resman/Projects/resman-projects/zeki/packages/dashboard && pkill -f 'meteor run' || true && sleep 2 && source /Users/resman/Projects/resman-projects/envs/.env.zeki && meteor run --settings settings-local.json --port 4000" in win
             
             # Create and setup second tab
             tell application "System Events" to keystroke "t" using command down
             delay 5
-            do script "cd /Users/resman/Projects/resman-projects/zeki/packages/frontend && meteor run --settings settings-local.json" in window 1
+            do script "cd /Users/resman/Projects/resman-projects/zeki/packages/frontend && source /Users/resman/Projects/resman-projects/envs/.env.zeki && meteor run --settings settings-local.json" in window 1
             delay 5
             return win_id
         end tell
@@ -172,18 +204,33 @@ EOF
             # Create and setup second tab - Viewer Dev
             tell application "System Events" to keystroke "t" using command down
             delay 5
-            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && NODE_OPTIONS='--import=./initialize.js' DEBUG=vike:error MONGODB_URI=mongodb://localhost:27018/sites /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=viewer" in window 1
+            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && source /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr && export \$(cat /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr | xargs) && NODE_OPTIONS='--loader ts-node/esm' /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=viewer" in window 1
             
             # Create and setup third tab - Server Dev
             tell application "System Events" to keystroke "t" using command down
             delay 5
-            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && NODE_OPTIONS='--import=./initialize.js' MONGODB_URI=mongodb://localhost:27018/sites NODE_ENV=development HOSTNAME=local /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=server" in window 1
+            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && source /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr && export \$(cat /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr | xargs) && NODE_OPTIONS='--loader ts-node/esm' /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=server" in window 1
             
             return win_id
         end tell
 EOF
     )
     store_terminal_id "$WINDOW2_ID"
+
+    # Open third Terminal window for serverless
+    WINDOW3_ID=$(osascript <<EOF
+        tell application "Terminal"
+            # Create new window and get its ID
+            set win to do script ""
+            set win_id to id of window 1
+            
+            do script "cd /Users/resman/Projects/resman-projects/zeki-v2/serverless && ln -sf /Users/resman/Projects/resman-projects/envs/.env.zeki-v2 .env && set -a && . /Users/resman/Projects/resman-projects/envs/.env.zeki-v2 && set +a && TH=1 npm run dev" in win
+
+            return win_id
+        end tell
+EOF
+    )
+    store_terminal_id "$WINDOW3_ID"
 }
 
 # Function to open Chrome with specific profile and URLs in a single window
@@ -307,21 +354,21 @@ duration_seconds=$(validate_duration "$duration")
 start_dev_servers
 
 # Wait for servers to start
-sleep 10
+# sleep 10
 
-# Open Chrome profile with specified URLs
-echo "Starting Chrome with specified URLs..."
-profile_path="Profile 12"
-open_chrome "$profile_path" \
-    "http://localhost:4000/" \
-    "https://github.com/razzinteractive/zeki/pulls" \
-    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
-    "https://chatgpt.com/"
+# # Open Chrome profile with specified URLs
+# echo "Starting Chrome with specified URLs..."
+# profile_path="Profile 12"
+# open_chrome "$profile_path" \
+#     "http://localhost:4000/" \
+#     "https://github.com/razzinteractive/zeki/pulls" \
+#     "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
+#     "https://chatgpt.com/"
 
-# Open specified applications
-echo "Starting applications..."
-apps=("PhpStorm" "Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams")
-open_apps "${apps[@]}"
+# # Open specified applications
+# echo "Starting applications..."
+# apps=("Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams")
+# open_apps "${apps[@]}"
 
 # Set initial end time using bc for calculation
 end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
