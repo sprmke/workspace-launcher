@@ -354,21 +354,21 @@ duration_seconds=$(validate_duration "$duration")
 start_dev_servers
 
 # Wait for servers to start
-# sleep 10
+sleep 10
 
-# # Open Chrome profile with specified URLs
-# echo "Starting Chrome with specified URLs..."
-# profile_path="Profile 12"
-# open_chrome "$profile_path" \
-#     "http://localhost:4000/" \
-#     "https://github.com/razzinteractive/zeki/pulls" \
-#     "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
-#     "https://chatgpt.com/"
+# Open Chrome profile with specified URLs
+echo "Starting Chrome with specified URLs..."
+profile_path="Profile 12"
+open_chrome "$profile_path" \
+    "http://localhost:4000/" \
+    "https://github.com/razzinteractive/zeki/pulls" \
+    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
+    "https://chatgpt.com/"
 
-# # Open specified applications
-# echo "Starting applications..."
-# apps=("Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams")
-# open_apps "${apps[@]}"
+# Open specified applications
+echo "Starting applications..."
+apps=("Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams")
+open_apps "${apps[@]}"
 
 # Set initial end time using bc for calculation
 end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
