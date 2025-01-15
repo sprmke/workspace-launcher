@@ -5,6 +5,14 @@ end_time=0
 timer_pid=""
 TERMINAL_WINDOW_IDS=()
 
+# Function to clear previous lines
+clear_lines() {
+    local lines=$1
+    for ((i=0; i<lines; i++)); do
+        echo -en "\033[1A\033[2K"
+    done
+}
+
 # Cleanup function to be called on script exit
 cleanup() {
     rm -f /tmp/dev_terminal_ids
