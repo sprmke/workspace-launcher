@@ -31,14 +31,21 @@ load_terminal_ids() {
     fi
 }
 
-# Function to validate duration
+# Function to validate duration and convert to seconds
 validate_duration() {
     local input=$1
-    if ! [[ "$input" =~ ^[0-9]+$ ]] || [ "$input" -le 0 ]; then
-        echo 30
+    # Check if input is a valid number (integer or float)
+    if ! [[ "$input" =~ ^[0-9]*\.?[0-9]+$ ]] || [ "$(echo "$input <= 0" | bc)" -eq 1 ]; then
+        echo 1800  # 30 minutes in seconds
     else
-        echo "$input"
+        # Convert to seconds (multiply by 60 to convert minutes to seconds)
+        echo "scale=0; $input * 60" | bc
     fi
+}
+
+# Function to focus terminal window
+focus_terminal() {
+    osascript -e 'tell application "Terminal" to activate'
 }
 
 # Function to close specific terminal windows
@@ -216,6 +223,8 @@ display_countdown_and_menu() {
     local profile_path=$1
     shift
     local apps=("$@")
+    local warning_shown=false
+    local display_lines=4
     
     # Initial display of menu options
     echo -e "\nTimer Control Menu:"
@@ -225,21 +234,39 @@ display_countdown_and_menu() {
     
     while true; do
         current_time=$(date +%s)
-        remaining_seconds=$((end_time - current_time))
+        # Use bc for arithmetic and round to nearest integer
+        remaining_seconds=$(echo "scale=0; ($end_time - $current_time)/1" | bc)
         
-        if [ $remaining_seconds -le 0 ]; then
+        if [ "$remaining_seconds" -le 0 ]; then
             echo -e "\nTime's up! Closing applications..."
             close_apps "$profile_path" "${apps[@]}"
             return
         fi
         
-        minutes=$((remaining_seconds / 60))
-        seconds=$((remaining_seconds % 60))
+        # Use bc for division and modulo, round to nearest integer
+        minutes=$(echo "scale=0; $remaining_seconds / 60" | bc)
+        seconds=$(echo "scale=0; $remaining_seconds % 60" | bc)
         
-        # Move cursor up 1 line and clear the time remaining line
-        echo -en "\033[1A\033[2K"
-        # Display the new time
-        echo -e "Time remaining: ${minutes}m ${seconds}s"
+        # Show warning at 1 minute remaining
+        if [ "$minutes" -eq 0 ] && [ "$seconds" -le 60 ] && [ $warning_shown = false ]; then
+            warning_shown=true
+            focus_terminal
+            clear_lines 1  # Clear only the time remaining line
+            echo -e "\n⚠️  1 MINUTE REMAINING!"
+            echo "Press 1 to extend time or 2 to close now"
+            echo -e "Time remaining: ${minutes}m ${seconds}s"
+            continue
+        fi
+        
+        if [ $warning_shown = false ]; then
+            # Just update the time line
+            echo -en "\033[1A\033[2K"  # Clear only the last line
+            echo -e "Time remaining: ${minutes}m ${seconds}s"
+        else
+            # When warning is shown, just update the last line
+            echo -en "\033[1A\033[2K"
+            echo -e "Time remaining: ${minutes}m ${seconds}s"
+        fi
         
         # Check for input with a timeout
         read -t 1 -n 1 action
@@ -249,8 +276,15 @@ display_countdown_and_menu() {
                 1)
                     echo
                     read -p "Enter new duration in minutes: " new_duration
-                    new_duration=$(validate_duration "$new_duration")
-                    end_time=$(($(date +%s) + new_duration * 60))
+                    duration_seconds=$(validate_duration "$new_duration")
+                    # Use bc for end time calculation
+                    end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
+                    warning_shown=false  # Reset warning flag
+                    clear_lines 6  # Clear the warning messages
+                    echo -e "\nTimer Control Menu:"
+                    echo "1) Set new duration"
+                    echo "2) Close now"
+                    echo -e "\nTime remaining: calculating..."
                     ;;
                 2)
                     echo -e "\nClosing applications..."
@@ -267,7 +301,7 @@ display_countdown_and_menu() {
 # Get duration with default value of 30 minutes
 read -p "Enter duration in minutes before auto-close [30]: " duration
 duration=${duration:-30}  # Set default to 30 if empty
-duration=$(validate_duration "$duration")
+duration_seconds=$(validate_duration "$duration")
 
 # Start the dev servers
 start_dev_servers
@@ -289,8 +323,8 @@ echo "Starting applications..."
 apps=("PhpStorm" "Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams")
 open_apps "${apps[@]}"
 
-# Set initial end time
-end_time=$(($(date +%s) + duration * 60))
+# Set initial end time using bc for calculation
+end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
 
 # Start countdown and menu display with profile path and apps
 display_countdown_and_menu "$profile_path" "${apps[@]}"
