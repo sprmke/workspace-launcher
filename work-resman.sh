@@ -375,7 +375,7 @@ open_chrome "$profile_path" \
 
 # Open specified applications
 echo "Starting applications..."
-apps=("Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams" "PhpStorm")
+apps=("Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams" "PhpStorm")
 open_apps "${apps[@]}"
 
 # Set initial end time using bc for calculation
