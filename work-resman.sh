@@ -94,7 +94,7 @@ EOF
 # Function to close applications
 close_apps() {
     # Close the terminal windows first
-    close_dev_terminals
+    # close_dev_terminals
 
     local profile_path=$1
     
@@ -359,7 +359,7 @@ duration=${duration:-30}  # Set default to 30 if empty
 duration_seconds=$(validate_duration "$duration")
 
 # Start the dev servers
-start_dev_servers
+# start_dev_servers
 
 # Wait for servers to start
 sleep 10
@@ -375,7 +375,7 @@ open_chrome "$profile_path" \
 
 # Open specified applications
 echo "Starting applications..."
-apps=("Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams")
+apps=("Cursor" "Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams" "PhpStorm")
 open_apps "${apps[@]}"
 
 # Set initial end time using bc for calculation
