@@ -200,13 +200,37 @@ display_countdown_and_menu() {
 
 # Main script
 # Get duration with default value of 30 minutes
+clear
+echo -e "\nLaunch mode:"
+echo "1) Essential apps only"
+echo "2) All apps"
+read -p "Enter choice (1-2): " launch_mode
+
 read -p "Enter duration in minutes before auto-close [30]: " duration
 duration=${duration:-30}  # Set default to 30 if empty
 duration_seconds=$(validate_duration "$duration")
 
 # Store profile path and apps
 profile_path="Default"
-apps=("Windsurf" "Github Desktop" "Sublime Text" "Slack" "Teams")
+
+# Define essential and all apps/URLs
+essential_urls=(
+    "https://chatgpt.com/"
+    "http://localhost:5173/"
+    "https://trello.com/b/iWR71DXf/web-app"
+    "https://bitbucket.org/auristech/fonetti-web/commits/branch/main"
+)
+all_urls=(
+    "https://pomofocus.io/app"
+    "https://miro.com/app/board/uXjVPvGoz9U=/"
+    "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors"
+    "https://docs.google.com/document/d/13vxiPW3W9snzwULGKxC34rY-Y9RpEEFuGpxWu5z6xG8/edit?tab=t.pd1f1vugt095#heading=h.mbkujqfm82"
+    "https://docs.google.com/document/d/1x5yYzUH71q0u-DhZt-8Oeh7SukuMSOoLr2f2jQvpxj4/edit?tab=t.0#heading=h.y7bxmbmchq97"
+)
+# Essential apps
+essential_apps=("Windsurf" "Github Desktop" "Slack")
+# Additional apps
+all_apps=("Postman 2" "Sublime Text" "Teams")
 
 # Start the dev server
 echo "Starting dev server..."
@@ -215,18 +239,15 @@ start_dev_server
 # Wait a bit for the dev server to start
 sleep 3
 
-# Open Chrome with specified profile and URLs
+# Open Chrome with specified profile and URLs based on launch mode
 echo "Starting Chrome with specified URLs..."
-open_chrome "$profile_path" \
-    "https://pomofocus.io/app" \
-    "https://chatgpt.com/" \
-    "http://localhost:5173/" \
-    "https://trello.com/b/iWR71DXf/web-app" \
-    "https://miro.com/app/board/uXjVPvGoz9U=/" \
-    "https://bitbucket.org/auristech/fonetti-web/commits/branch/main" \
-    "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors" \
-    "https://docs.google.com/document/d/13vxiPW3W9snzwULGKxC34rY-Y9RpEEFuGpxWu5z6xG8/edit?tab=t.pd1f1vugt095#heading=h.mbkujqfm82" \
-    "https://docs.google.com/document/d/1x5yYzUH71q0u-DhZt-8Oeh7SukuMSOoLr2f2jQvpxj4/edit?tab=t.0#heading=h.y7bxmbmchq97" 
+if [ "$launch_mode" = "1" ]; then
+    open_chrome "$profile_path" "${essential_urls[@]}"
+    apps=("${essential_apps[@]}")
+else
+    open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
+    apps=("${essential_apps[@]}" "${all_apps[@]}")
+fi
 
 # Open applications
 echo "Starting applications..."
