@@ -225,6 +225,7 @@ while true; do
             essential_urls=(
                 "https://chatgpt.com/"
                 "https://banterbubbles.com/"
+                "https://www.okx.com/web3"
                 "https://coinmarketcap.com/portfolio-tracker/"
                 "https://www.binance.com/en/my/wallet/account/overview"
                 "https://cointelegraph.com/category/latest-news"
