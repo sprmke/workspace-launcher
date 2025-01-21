@@ -102,6 +102,7 @@ display_countdown_and_menu() {
         if [ "$remaining_seconds" -le 0 ]; then
             echo -e "\nTime's up! Closing applications..."
             close_apps "$profile_path" "${apps[@]}"
+            clear  # Clear screen before returning to main menu
             return
         fi
         
@@ -151,6 +152,7 @@ display_countdown_and_menu() {
                 2)
                     echo -e "\nClosing applications..."
                     close_apps "$profile_path" "${apps[@]}"
+                    clear  # Clear screen before returning to main menu
                     return
                     ;;
             esac
@@ -160,7 +162,6 @@ display_countdown_and_menu() {
 
 # Main loop for category selection
 while true; do
-    clear
     echo "Select workspace:"
     echo "1) Condo"
     echo "2) Crypto"
@@ -172,6 +173,13 @@ while true; do
 
     [ "$choice" = "6" ] && exit 0
 
+    # Clear screen before showing launch mode menu
+    clear
+    echo -e "\nLaunch mode:"
+    echo "1) Essential apps only"
+    echo "2) All apps"
+    read -p "Enter choice (1-2): " launch_mode
+    
     # Get duration with default value of 30 minutes
     read -p "Enter duration in minutes before auto-close [30]: " duration
     duration=${duration:-30}  # Set default to 30 if empty
@@ -183,44 +191,67 @@ while true; do
     # Store profile path and apps for the selected category
     profile_path=""
     apps=()
+    essential_urls=()
+    all_urls=()
     
     case $choice in
         1)  # Condo
             profile_path="Profile 12"
-            open_chrome "$profile_path" \
-                "https://pomofocus.io/app" \
-                "https://chatgpt.com/" \
-                "https://business.facebook.com/latest/inbox/all/" \
-                "https://business.facebook.com/latest/content_calendar" \
+            # Essential URLs
+            essential_urls=(
+                "https://chatgpt.com/"
+                "https://business.facebook.com/latest/inbox/all/"
+                "https://business.facebook.com/latest/content_calendar"
                 "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw"
-            apps=("Adobe Photoshop 2024" "Messenger")
+            )
+            # Essential apps
+            essential_apps=("Messenger")
+            # Additional apps
+            all_apps=("Adobe Photoshop 2024")
+            
+            # Open Chrome with appropriate URLs based on launch mode
+            if [ "$launch_mode" = "1" ]; then
+                open_chrome "$profile_path" "${essential_urls[@]}"
+                apps=("${essential_apps[@]}")
+            else
+                open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
+                apps=("${essential_apps[@]}" "${all_apps[@]}")
+            fi
             open_apps "${apps[@]}"
             ;;
         2)  # Crypto
             profile_path="Profile 15"
-            open_chrome "$profile_path" \
-                "https://pomofocus.io/app" \
-                "https://chatgpt.com/" \
-                "https://coinmarketcap.com/portfolio-tracker/" \
-                "https://www.investagrams.com/News/" \
-                "https://cryptopanic.com/" \
-                "https://www.todayonchain.com/" \
-                "https://cointelegraph.com/category/latest-news" \
-                "https://www.bitget.com/spot/BTCUSDT" \
-                "https://www.binance.com/en/my/wallet/account/overview" \
-                "https://www.okx.com/balance/finance" \
-                "https://www.bybit.com/user/assets/home/financial" \
-                "https://www.youtube.com/" \
-                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M" \
+            # Essential URLs
+            essential_urls=(
+                "https://chatgpt.com/"
+                "https://coinmarketcap.com/portfolio-tracker/"
+                "https://www.binance.com/en/my/wallet/account/overview"
+                "https://cointelegraph.com/category/latest-news"
+                "https://www.youtube.com/"
+            )
+            # Additional URLs
+            all_urls=(
+                "https://cryptopanic.com/"
+                "https://www.investagrams.com/News/"
+                "https://www.todayonchain.com/"
+                "https://www.okx.com/balance/finance"
+                "https://www.bybit.com/user/assets/home/financial"
+                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
+            )
+            # Open Chrome with appropriate URLs based on launch mode
+            if [ "$launch_mode" = "1" ]; then
+                open_chrome "$profile_path" "${essential_urls[@]}"
+            else
+                open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
+            fi
+            # Open second profile
             profile_path="Profile 1"
-            open_chrome "$profile_path" \
-                "https://www.bitget.com/spot/BTCUSDT"
+            open_chrome "$profile_path" "https://www.bitget.com/spot/BTCUSDT"
             ;;
         3)  # Stock
             profile_path="Profile 16"
             open_chrome "$profile_path" \
-                "https://pomofocus.io/app" \
                 "https://chatgpt.com/" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
                 "https://www.investagrams.com/News/" \
@@ -231,22 +262,34 @@ while true; do
             ;;
         4)  # Study
             profile_path="Profile 7"
-            open_chrome "$profile_path" \
-                "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html" \
-                "https://pomofocus.io/app" \
-                "https://chatgpt.com/" \
-                "https://claude.ai/" \
-                "https://www.linkedin.com/messaging/" \
-                "https://www.udemy.com/home/my-courses/learning/" \
+            # Essential URLs
+            essential_urls=(
+                "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
+                "https://pomofocus.io/app"
+                "https://chatgpt.com/"
+                "https://claude.ai/"
+                "https://www.udemy.com/home/my-courses/learning/"
+            )
+            # Additional URLs
+            all_urls=(
+                "https://www.linkedin.com/messaging/"
                 "https://www.youtube.com/"
-            apps=("Cursor" "Visual Studio Code" "Notion")
+            )
+            # Essential apps
+            essential_apps=("Cursor" "Notion")
+            # Open Chrome with appropriate URLs based on launch mode
+            if [ "$launch_mode" = "1" ]; then
+                open_chrome "$profile_path" "${essential_urls[@]}"
+                apps=("${essential_apps[@]}")
+            else
+                open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
+                apps=("${essential_apps[@]}" "${all_apps[@]}")
+            fi
             open_apps "${apps[@]}"
             ;;
         5)  # Budget
             profile_path="Profile 1"
             open_chrome "$profile_path" \
-                "https://pomofocus.io/app" \
-                "https://chatgpt.com/" \
                 "https://docs.google.com/spreadsheets/d/18_xpANJbYqf53RStc-x9bROy1Xjm04KB1s60yjOgF0E" \
                 "https://docs.google.com/spreadsheets/d/19H2ixczbupOp1O91Nh3IRRl-X2iVOSei50b1VtZugBw" \
                 "https://docs.google.com/spreadsheets/d/1VHLSZxaTcm7IKI16Wkz_PDw6S7ZQsohRGap15EhfjzM" \
