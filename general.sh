@@ -207,7 +207,7 @@ while true; do
             # Essential apps
             essential_apps=("Messenger")
             # Additional apps
-            all_apps=("Adobe Photoshop 2024")
+            all_apps=("Adobe Photoshop 2024" "Slack" "Microsoft Teams")
             
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
@@ -239,15 +239,23 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
+            # Essential apps
+            # essential_apps=("Discord")
+            # Additional apps
+            all_apps=("Slack" "Microsoft Teams")
+
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
                 open_chrome "$profile_path" "${essential_urls[@]}"
+                apps=("${essential_apps[@]}")
             else
                 open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
+                apps=("${essential_apps[@]}" "${all_apps[@]}")
             fi
             # Open second profile
             profile_path="Profile 1"
             open_chrome "$profile_path" "https://www.bitget.com/spot/BTCUSDT"
+            open_apps "${apps[@]}"
             ;;
         3)  # Stock
             profile_path="Profile 16"
@@ -277,6 +285,8 @@ while true; do
             )
             # Essential apps
             essential_apps=("Cursor" "Notion")
+            # Additional apps
+            all_apps=("Slack" "Microsoft Teams")
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
                 open_chrome "$profile_path" "${essential_urls[@]}"
