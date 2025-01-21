@@ -224,6 +224,7 @@ while true; do
             # Essential URLs
             essential_urls=(
                 "https://chatgpt.com/"
+                "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
                 "https://www.binance.com/en/my/wallet/account/overview"
                 "https://cointelegraph.com/category/latest-news"
