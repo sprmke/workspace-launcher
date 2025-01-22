@@ -215,13 +215,13 @@ profile_path="Default"
 
 # Define essential and all apps/URLs
 essential_urls=(
+    "https://pomofocus.io/app"
     "https://chatgpt.com/"
     "http://localhost:5173/"
     "https://trello.com/b/iWR71DXf/web-app"
     "https://bitbucket.org/auristech/fonetti-web/commits/branch/main"
 )
 all_urls=(
-    "https://pomofocus.io/app"
     "https://miro.com/app/board/uXjVPvGoz9U=/"
     "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors"
     "https://docs.google.com/document/d/13vxiPW3W9snzwULGKxC34rY-Y9RpEEFuGpxWu5z6xG8/edit?tab=t.pd1f1vugt095#heading=h.mbkujqfm82"
