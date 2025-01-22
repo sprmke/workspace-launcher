@@ -274,7 +274,6 @@ while true; do
             profile_path="Profile 7"
             # Essential URLs
             essential_urls=(
-                "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
                 "https://pomofocus.io/app"
                 "https://chatgpt.com/"
                 "https://claude.ai/"
@@ -282,6 +281,7 @@ while true; do
             )
             # Additional URLs
             all_urls=(
+                "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
                 "https://www.linkedin.com/messaging/"
                 "https://www.youtube.com/"
             )
