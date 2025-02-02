@@ -207,7 +207,7 @@ while true; do
             # Essential apps
             essential_apps=("Messenger")
             # Additional apps
-            all_apps=("Adobe Photoshop 2024" "Slack" "Microsoft Teams")
+            all_apps=("Adobe Photoshop 2025" "Slack" "Microsoft Teams")
             
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
