@@ -196,7 +196,7 @@ while true; do
     
     case $choice in
         1)  # Condo
-            profile_path="Profile 12"
+            profile_path="Profile 8"
             # Essential URLs
             essential_urls=(
                 "https://chatgpt.com/"
@@ -220,7 +220,7 @@ while true; do
             open_apps "${apps[@]}"
             ;;
         2)  # Crypto
-            profile_path="Profile 15"
+            profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
                 "https://chatgpt.com/"
@@ -260,7 +260,7 @@ while true; do
             open_apps "${apps[@]}"
             ;;
         3)  # Stock
-            profile_path="Profile 16"
+            profile_path="Profile 7"
             open_chrome "$profile_path" \
                 "https://chatgpt.com/" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
@@ -271,7 +271,7 @@ while true; do
                 "https://www.youtube.com/"
             ;;
         4)  # Study
-            profile_path="Profile 7"
+            profile_path="Profile 1"
             # Essential URLs
             essential_urls=(
                 "https://pomofocus.io/app"
@@ -300,7 +300,7 @@ while true; do
             open_apps "${apps[@]}"
             ;;
         5)  # Budget
-            profile_path="Profile 1"
+            profile_path="Default"
             open_chrome "$profile_path" \
                 "https://docs.google.com/spreadsheets/d/18_xpANJbYqf53RStc-x9bROy1Xjm04KB1s60yjOgF0E" \
                 "https://docs.google.com/spreadsheets/d/19H2ixczbupOp1O91Nh3IRRl-X2iVOSei50b1VtZugBw" \
