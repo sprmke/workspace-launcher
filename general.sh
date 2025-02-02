@@ -199,7 +199,6 @@ while true; do
             profile_path="Profile 8"
             # Essential URLs
             essential_urls=(
-                "https://chatgpt.com/"
                 "https://business.facebook.com/latest/inbox/all/"
                 "https://business.facebook.com/latest/content_calendar"
                 "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw"
@@ -223,21 +222,24 @@ while true; do
             profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
-                "https://chatgpt.com/"
-                "https://banterbubbles.com/"
+                "https://www.okx.com/trade-spot/btc-usdt"
                 "https://www.okx.com/web3"
+                "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
-                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://cointelegraph.com/category/latest-news"
                 "https://www.youtube.com/"
             )
             # Additional URLs
             all_urls=(
+                # Wallets
+                "https://www.binance.com/en/my/wallet/account/overview"
+                "https://www.bybit.com/user/assets/home/financial"
+                "https://www.bitget.com/asset"
+                # News
                 "https://cryptopanic.com/"
                 "https://www.investagrams.com/News/"
                 "https://www.todayonchain.com/"
-                "https://www.okx.com/balance/finance"
-                "https://www.bybit.com/user/assets/home/financial"
+                # Reports
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
@@ -251,18 +253,13 @@ while true; do
                 open_chrome "$profile_path" "${essential_urls[@]}"
                 apps=("${essential_apps[@]}")
             else
-                open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
+                open_chrome "$profile_path" "${all_urls[@]}"
                 apps=("${essential_apps[@]}" "${all_apps[@]}")
             fi
-            # Open second profile
-            profile_path="Profile 1"
-            open_chrome "$profile_path" "https://www.bitget.com/spot/BTCUSDT"
-            open_apps "${apps[@]}"
             ;;
         3)  # Stock
             profile_path="Profile 7"
             open_chrome "$profile_path" \
-                "https://chatgpt.com/" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
                 "https://www.investagrams.com/News/" \
                 "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003" \
@@ -275,7 +272,6 @@ while true; do
             # Essential URLs
             essential_urls=(
                 "https://pomofocus.io/app"
-                "https://chatgpt.com/"
                 "https://claude.ai/"
                 "https://www.udemy.com/home/my-courses/learning/"
             )
