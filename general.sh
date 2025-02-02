@@ -231,14 +231,21 @@ while true; do
             )
             # Additional URLs
             all_urls=(
+                # Portfolio
+                "https://coinmarketcap.com/portfolio-tracker/"
+                # Trade
+                "https://www.okx.com/trade-spot/btc-usdt"
+                "https://www.okx.com/web3"
                 # Wallets
                 "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bybit.com/user/assets/home/financial"
                 "https://www.bitget.com/asset"
                 # News
+                "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/"
                 "https://www.investagrams.com/News/"
                 "https://www.todayonchain.com/"
+                "https://www.youtube.com/"
                 # Reports
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
