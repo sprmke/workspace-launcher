@@ -268,10 +268,12 @@ while true; do
             profile_path="Profile 7"
             open_chrome "$profile_path" \
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
-                "https://www.investagrams.com/News/" \
-                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003" \
-                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
+                "https://www.investagrams.com/" \
                 "https://trade.dragonfi.ph/" \
+                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
+                "https://www.investagrams.com/News/" \
+                "https://simplywall.st/compare/PSE%3AAREIT%2CPSE%3AMREIT%2CPSE%3ACREIT%2CPSE%3ARCR%2CPSE%3AFILRT%2CPSE%3ADDMPR" \
+                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003" \
                 "https://www.youtube.com/"
             ;;
         4)  # Study
@@ -284,7 +286,6 @@ while true; do
             )
             # Additional URLs
             all_urls=(
-                "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
                 "https://www.linkedin.com/messaging/"
                 "https://www.youtube.com/"
             )
