@@ -38,7 +38,7 @@ close_apps() {
     done
 
     # Wait for the Chrome and applications to close
-    sleep 5
+    sleep 3
 }
 
 # Function to open Chrome with specific profile and URLs in a single window
@@ -281,7 +281,6 @@ while true; do
             # Essential URLs
             essential_urls=(
                 "https://pomofocus.io/app"
-                "https://claude.ai/"
                 "https://www.udemy.com/home/my-courses/learning/"
             )
             # Additional URLs
@@ -290,7 +289,7 @@ while true; do
                 "https://www.youtube.com/"
             )
             # Essential apps
-            essential_apps=("Cursor" "Notion")
+            essential_apps=("Cursor" "Notion" "Obsidian")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams")
             # Open Chrome with appropriate URLs based on launch mode
@@ -301,7 +300,6 @@ while true; do
                 open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
                 apps=("${essential_apps[@]}" "${all_apps[@]}")
             fi
-            open_apps "${apps[@]}"
             ;;
         5)  # Budget
             profile_path="Default"
