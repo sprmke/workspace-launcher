@@ -215,7 +215,6 @@ profile_path="Default"
 
 # Define essential and all apps/URLs
 essential_urls=(
-    "https://chatgpt.com/"
     "http://localhost:5173/"
     "https://trello.com/b/iWR71DXf/web-app"
     "https://bitbucket.org/auristech/fonetti-web/commits/branch/main"
