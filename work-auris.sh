@@ -215,7 +215,6 @@ profile_path="Default"
 
 # Define essential and all apps/URLs
 essential_urls=(
-    "https://pomofocus.io/app"
     "https://chatgpt.com/"
     "http://localhost:5173/"
     "https://trello.com/b/iWR71DXf/web-app"
