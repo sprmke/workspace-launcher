@@ -222,8 +222,6 @@ essential_urls=(
 all_urls=(
     "https://miro.com/app/board/uXjVPvGoz9U=/"
     "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors"
-    "https://docs.google.com/document/d/13vxiPW3W9snzwULGKxC34rY-Y9RpEEFuGpxWu5z6xG8/edit?tab=t.pd1f1vugt095#heading=h.mbkujqfm82"
-    "https://docs.google.com/document/d/1x5yYzUH71q0u-DhZt-8Oeh7SukuMSOoLr2f2jQvpxj4/edit?tab=t.0#heading=h.y7bxmbmchq97"
 )
 # Essential apps
 essential_apps=("Windsurf" "Github Desktop" "Slack")
