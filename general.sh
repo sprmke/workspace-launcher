@@ -285,6 +285,7 @@ while true; do
             # Essential URLs for Profile 1
             essential_urls=(
                 "https://www.udemy.com/home/my-courses/learning/"
+                "https://github.com/sprmke"
             )
             # URLs for Profile 2
             study_profile2_urls=(
