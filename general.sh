@@ -297,7 +297,7 @@ while true; do
                 "https://www.youtube.com/"
             )
             # Essential apps
-            essential_apps=("Cursor" "Notion" "Obsidian")
+            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams")
             
