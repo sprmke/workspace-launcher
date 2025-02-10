@@ -43,15 +43,15 @@ close_apps() {
 
 # Function to open Chrome with specific profile and URLs in a single window
 open_chrome() {
-    echo "Starting Chrome with profile: $profile_path..."
-    profile_path=$1
+    local current_profile=$1
+    echo "Starting Chrome with profile: $current_profile..."
     shift
     first_url=$1
     shift
     
     # Open first URL in a new window and redirect output to /dev/null
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-        --profile-directory="$profile_path" \
+        --profile-directory="$current_profile" \
         --new-window \
         "$first_url" > /dev/null 2>&1 &
     
@@ -61,7 +61,7 @@ open_chrome() {
     # Open remaining URLs in new tabs in the same window
     for url in "$@"; do
         "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-            --profile-directory="$profile_path" \
+            --profile-directory="$current_profile" \
             --new-tab \
             "$url" > /dev/null 2>&1
     done
@@ -282,13 +282,12 @@ while true; do
             ;;
         4)  # Study
             profile_path="Profile 1"
-            profile_path2="Profile 2"
             # Essential URLs for Profile 1
             essential_urls=(
                 "https://www.udemy.com/home/my-courses/learning/"
             )
             # URLs for Profile 2
-            profile2_urls=(
+            study_profile2_urls=(
                 "https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/learn/lecture/46867711?start=0#overview"
                 "https://www.udemy.com/course/deeplearning/learn/lecture/20258078?start=15#overview"
             )
@@ -312,7 +311,7 @@ while true; do
             fi
             
             # Open Chrome with Profile 2
-            open_chrome "$profile_path2" "${profile2_urls[@]}"
+            open_chrome "Profile 2" "${study_profile2_urls[@]}"
             
             # Open the selected applications
             open_apps "${apps[@]}"
