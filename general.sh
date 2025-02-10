@@ -264,6 +264,9 @@ while true; do
                 open_chrome "$profile_path" "${all_urls[@]}"
                 apps=("${essential_apps[@]}" "${all_apps[@]}")
             fi
+            
+            # Open the selected applications
+            open_apps "${apps[@]}"
             ;;
         3)  # Stock
             profile_path="Profile 7"
