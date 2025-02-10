@@ -190,6 +190,7 @@ while true; do
 
     # Store profile path and apps for the selected category
     profile_path=""
+    profile_path2=""
     apps=()
     essential_urls=()
     all_urls=()
@@ -278,9 +279,15 @@ while true; do
             ;;
         4)  # Study
             profile_path="Profile 1"
-            # Essential URLs
+            profile_path2="Profile 2"
+            # Essential URLs for Profile 1
             essential_urls=(
                 "https://www.udemy.com/home/my-courses/learning/"
+            )
+            # URLs for Profile 2
+            profile2_urls=(
+                "https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/learn/lecture/46867711?start=0#overview"
+                "https://www.udemy.com/course/deeplearning/learn/lecture/20258078?start=15#overview"
             )
             # Additional URLs
             all_urls=(
@@ -291,7 +298,8 @@ while true; do
             essential_apps=("Cursor" "Notion" "Obsidian")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams")
-            # Open Chrome with appropriate URLs based on launch mode
+            
+            # Open Chrome with Profile 1
             if [ "$launch_mode" = "1" ]; then
                 open_chrome "$profile_path" "${essential_urls[@]}"
                 apps=("${essential_apps[@]}")
@@ -299,6 +307,9 @@ while true; do
                 open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
                 apps=("${essential_apps[@]}" "${all_apps[@]}")
             fi
+            
+            # Open Chrome with Profile 2
+            open_chrome "$profile_path2" "${profile2_urls[@]}"
             ;;
         5)  # Budget
             profile_path="Default"
