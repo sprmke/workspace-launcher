@@ -280,7 +280,6 @@ while true; do
             profile_path="Profile 1"
             # Essential URLs
             essential_urls=(
-                "https://pomofocus.io/app"
                 "https://www.udemy.com/home/my-courses/learning/"
             )
             # Additional URLs
