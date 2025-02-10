@@ -310,6 +310,9 @@ while true; do
             
             # Open Chrome with Profile 2
             open_chrome "$profile_path2" "${profile2_urls[@]}"
+            
+            # Open the selected applications
+            open_apps "${apps[@]}"
             ;;
         5)  # Budget
             profile_path="Default"
