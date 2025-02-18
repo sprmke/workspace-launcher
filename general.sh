@@ -240,12 +240,14 @@ while true; do
                 # Portfolio
                 "https://coinmarketcap.com/portfolio-tracker/"
                 # Trade
-                "https://www.okx.com/trade-spot/btc-usdt"
-                "https://www.okx.com/web3"
+                 "https://www.bitget.com/spot/BTCUSDT"
+                
+                "https://www.okx.com/web3?chainIds=all&changePeriod=4&desc=true&liquidityMin=10000&periodType=4&rankBy=4&riskFilter=true&stableTokenFilter=true&tags=0&tokenAgeMax=30&tokenAgeType=1&tradeNumPeriod=4&txsPeriod=4&uniqueTraderPeriod=4&volumePeriod=4"
                 # Wallets
                 "https://www.binance.com/en/my/wallet/account/overview"
-                "https://www.bybit.com/user/assets/home/financial"
                 "https://www.bitget.com/asset"
+                "https://www.okx.com/balance/overview"
+                "https://www.bybit.com/user/assets/home/financial"
                 # News
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/"
