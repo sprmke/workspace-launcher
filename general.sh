@@ -224,10 +224,15 @@ while true; do
             # Essential URLs
             essential_urls=(
                 "https://www.okx.com/trade-spot/btc-usdt"
-                "https://www.okx.com/web3"
+                "https://alternative.me/crypto/fear-and-greed-index/"
+                "https://cointelegraph.com/category/latest-news"
+                "https://cryptopanic.com/#"
+                # Summarized daily crypto news in X
                 "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
-                "https://cointelegraph.com/category/latest-news"
+                "https://www.bitget.com/spot/BTCUSDT"
+                "https://www.okx.com/web3?chainIds=all&changePeriod=4&desc=true&liquidityMin=10000&periodType=4&rankBy=4&riskFilter=true&stableTokenFilter=true&tags=0&tokenAgeMax=30&tokenAgeType=1&tradeNumPeriod=4&txsPeriod=4&uniqueTraderPeriod=4&volumePeriod=4"
+                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://www.youtube.com/"
             )
             # Additional URLs
@@ -252,7 +257,7 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
             # Essential apps
-            # essential_apps=("Discord")
+            # essential_apps=("Obsedian")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams")
 
