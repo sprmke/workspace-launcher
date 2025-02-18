@@ -223,7 +223,6 @@ while true; do
             profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
-                "https://www.okx.com/trade-spot/btc-usdt"
                 "https://alternative.me/crypto/fear-and-greed-index/"
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/#"
