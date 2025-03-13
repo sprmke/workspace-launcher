@@ -293,11 +293,6 @@ while true; do
                 "https://www.udemy.com/home/my-courses/learning/"
                 "https://github.com/sprmke"
             )
-            # URLs for Profile 2
-            study_profile2_urls=(
-                "https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/learn/lecture/46867711?start=0#overview"
-                "https://www.udemy.com/course/deeplearning/learn/lecture/20258078?start=15#overview"
-            )
             # Additional URLs
             all_urls=(
                 "https://www.linkedin.com/messaging/"
@@ -316,9 +311,6 @@ while true; do
                 open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
                 apps=("${essential_apps[@]}" "${all_apps[@]}")
             fi
-            
-            # Open Chrome with Profile 2
-            open_chrome "Profile 2" "${study_profile2_urls[@]}"
             
             # Open the selected applications
             open_apps "${apps[@]}"
