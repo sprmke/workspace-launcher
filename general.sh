@@ -292,11 +292,11 @@ while true; do
             essential_urls=(
                 "https://www.udemy.com/home/my-courses/learning/"
                 "https://github.com/sprmke"
+                "https://www.youtube.com/"
             )
             # Additional URLs
             all_urls=(
                 "https://www.linkedin.com/messaging/"
-                "https://www.youtube.com/"
             )
             # Essential apps
             essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian")
