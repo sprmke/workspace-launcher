@@ -371,7 +371,6 @@ open_chrome "$profile_path" \
     "http://localhost:4000/" \
     "https://github.com/razzinteractive/zeki/pulls" \
     "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
-    "https://chatgpt.com/"
 
 # Open specified applications
 echo "Starting applications..."
