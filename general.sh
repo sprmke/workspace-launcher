@@ -301,7 +301,7 @@ while true; do
             # Essential apps
             essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian")
             # Additional apps
-            all_apps=("Slack" "Microsoft Teams")
+            all_apps=("Slack" "Microsoft Teams" "pgAdmin 4" "ChatGPT")
             
             # Open Chrome with Profile 1
             if [ "$launch_mode" = "1" ]; then
