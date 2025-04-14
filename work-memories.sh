@@ -211,7 +211,7 @@ duration=${duration:-30}  # Set default to 30 if empty
 duration_seconds=$(validate_duration "$duration")
 
 # Store profile path and apps
-profile_path="Default"
+profile_path="Profile 5"
 
 # Define essential and all apps/URLs
 essential_urls=(
