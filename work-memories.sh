@@ -222,7 +222,7 @@ all_urls=(
   "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
 )
 # Essential apps
-essential_apps=("Cursor" "Github Desktop" "Slack" "Notion" "1Password")
+essential_apps=("Screenshot Monitor" "Cursor" "Github Desktop" "Slack" "Notion" "1Password")
 # Additional apps
 all_apps=("Postman" "Obsidian" "Microsoft Outlook" "ChatGPT")
 
