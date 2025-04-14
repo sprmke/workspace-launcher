@@ -92,7 +92,7 @@ start_dev_server() {
     TERMINAL_WINDOW_ID=$(osascript <<EOF
         tell application "Terminal"
             activate
-            set newWindow to do script "cd /Users/auris/Projects/auris-projects/fonetti-web && pnpm dev"
+            set newWindow to do script "cd /Users/memories/Projects/memorials-platform-monorepo/ui-memories && pnpm dev"
             return id of window 1
         end tell
 EOF
@@ -228,7 +228,7 @@ all_apps=("Postman" "Obsidian" "ChatGPT")
 
 # Start the dev server
 echo "Starting dev server..."
-# start_dev_server
+start_dev_server
 
 # Wait a bit for the dev server to start
 sleep 3
