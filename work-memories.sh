@@ -215,12 +215,11 @@ profile_path="Default"
 
 # Define essential and all apps/URLs
 essential_urls=(
-    # "https://trello.com/b/iWR71DXf/web-app"
-    # "https://bitbucket.org/auristech/fonetti-web/commits/branch/main"
+  "https://linear.app/memoriestech/team/MEM/active"
 )
 all_urls=(
-    # "https://miro.com/app/board/uXjVPvGoz9U=/"
-    # "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors"
+  "https://screenshotmonitor.com/myhome"
+  "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
 )
 # Essential apps
 essential_apps=("Cursor" "Github Desktop" "Slack" "Notion")
