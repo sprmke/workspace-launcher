@@ -92,7 +92,7 @@ start_dev_server() {
     TERMINAL_WINDOW_ID=$(osascript <<EOF
         tell application "Terminal"
             activate
-            set newWindow to do script "cd /Users/memories/Projects/memorials-platform-monorepo/ui-memories && pnpm dev"
+            set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && pnpm dev"
             return id of window 1
         end tell
 EOF
