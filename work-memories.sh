@@ -222,9 +222,9 @@ all_urls=(
   "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
 )
 # Essential apps
-essential_apps=("Cursor" "Github Desktop" "Slack" "Notion")
+essential_apps=("Cursor" "Github Desktop" "Slack" "Notion" "1Password")
 # Additional apps
-all_apps=("Postman" "Obsidian" "ChatGPT")
+all_apps=("Postman" "Obsidian" "Microsoft Outlook" "ChatGPT")
 
 # Start the dev server
 echo "Starting dev server..."
