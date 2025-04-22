@@ -215,6 +215,7 @@ profile_path="Profile 5"
 
 # Define essential and all apps/URLs
 essential_urls=(
+  "http://localhost:3000"
   "https://linear.app/memoriestech/team/MEM/active"
 )
 all_urls=(
@@ -222,9 +223,9 @@ all_urls=(
   "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
 )
 # Essential apps
-essential_apps=("Screenshot Monitor" "Cursor" "Github Desktop" "Slack" "Notion" "1Password")
+essential_apps=("Screenshot Monitor" "Cursor" "Github Desktop" "Slack" "Obsidian" "1Password")
 # Additional apps
-all_apps=("Postman" "Obsidian" "Microsoft Outlook" "ChatGPT")
+all_apps=("Postman" "Notion" "Microsoft Outlook" "ChatGPT")
 
 # Start the dev server
 echo "Starting dev server..."
