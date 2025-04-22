@@ -225,7 +225,7 @@ all_urls=(
 # Essential apps
 essential_apps=("Screenshot Monitor" "Cursor" "Github Desktop" "Slack" "Obsidian" "1Password")
 # Additional apps
-all_apps=("Postman" "Notion" "Microsoft Outlook" "ChatGPT")
+all_apps=("Postman" "Notion" "Microsoft Outlook" "ChatGPT" "Microsoft Teams")
 
 # Start the dev server
 echo "Starting dev server..."
