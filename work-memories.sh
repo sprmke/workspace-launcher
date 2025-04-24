@@ -92,10 +92,10 @@ start_dev_server() {
     TERMINAL_WINDOW_ID=$(osascript <<EOF
         tell application "Terminal"
             activate
-            # First tab for UI server
+            # First tab for ui-memories app
             set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && aws-vault exec mem-dev -- pnpm safebox export --format=\"dotenv\" --stage dev --output-file=\".env\" && pnpm dev"
             
-            # Second tab for SST dev
+            # Second tab for memories-website app
             tell application "System Events" to keystroke "t" using command down
             delay 1
             do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev" in window 1
