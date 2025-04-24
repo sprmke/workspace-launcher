@@ -76,43 +76,29 @@ open_apps() {
     done
 }
 
-# Add global variable to store terminal window ID
-TERMINAL_WINDOW_ID=""
+# Add global variables to store terminal window IDs
+TERMINAL_WINDOW_ID_1=""
+TERMINAL_WINDOW_ID_2=""
 
-# Function to start dev server
-start_dev_server() {
-    # Check if port 5173 is in use and kill the process if it exists
-    if lsof -i :5173 > /dev/null; then
-        echo "Port 5173 is in use. Killing existing process..."
-        kill $(lsof -ti :5173)
-        sleep 1
-    fi
-
-    # Open Terminal and run dev server, storing the window ID
-    TERMINAL_WINDOW_ID=$(osascript <<EOF
-        tell application "Terminal"
-            activate
-            # First tab for ui-memories app
-            set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && aws-vault exec mem-dev -- pnpm safebox export --format=\"dotenv\" --stage dev --output-file=\".env\" && pnpm dev"
-            
-            # Second tab for memories-website app
-            tell application "System Events" to keystroke "t" using command down
-            delay 1
-            do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev" in window 1
-            
-            return id of window 1
-        end tell
-EOF
-    )
-}
-
-# Function to close specific terminal window
+# Function to close specific terminal windows
 close_dev_terminal() {
-    if [ ! -z "$TERMINAL_WINDOW_ID" ]; then
+    if [ ! -z "$TERMINAL_WINDOW_ID_1" ]; then
         osascript <<EOF
             tell application "Terminal"
                 repeat with w in windows
-                    if id of w is $TERMINAL_WINDOW_ID then
+                    if id of w is $TERMINAL_WINDOW_ID_1 then
+                        close w
+                        exit repeat
+                    end if
+                end repeat
+            end tell
+EOF
+    fi
+    if [ ! -z "$TERMINAL_WINDOW_ID_2" ]; then
+        osascript <<EOF
+            tell application "Terminal"
+                repeat with w in windows
+                    if id of w is $TERMINAL_WINDOW_ID_2 then
                         close w
                         exit repeat
                     end if
@@ -203,6 +189,36 @@ display_countdown_and_menu() {
             esac
         fi
     done
+}
+
+# Function to start dev server
+start_dev_server() {
+    # Check if port 5173 is in use and kill the process if it exists
+    if lsof -i :5173 > /dev/null; then
+        echo "Port 5173 is in use. Killing existing process..."
+        kill $(lsof -ti :5173)
+        sleep 1
+    fi
+
+    # Open first Terminal window for ui-memories app
+    TERMINAL_WINDOW_ID_1=$(osascript <<EOF
+        tell application "Terminal"
+            activate
+            set window1 to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && aws-vault exec mem-dev -- pnpm safebox export --format=\"dotenv\" --stage dev --output-file=\".env\" && pnpm dev"
+            return id of window 1
+        end tell
+EOF
+    )
+
+    # Open second Terminal window for memories-website app
+    TERMINAL_WINDOW_ID_2=$(osascript <<EOF
+        tell application "Terminal"
+            activate
+            set window2 to do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev"
+            return id of window 1
+        end tell
+EOF
+    )
 }
 
 # Main script
