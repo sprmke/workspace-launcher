@@ -234,7 +234,7 @@ duration=${duration:-30}  # Set default to 30 if empty
 duration_seconds=$(validate_duration "$duration")
 
 # Store profile path and apps
-profile_path="Profile 5"
+profile_path="Profile 3"
 
 # Define essential and all apps/URLs
 essential_urls=(
@@ -246,7 +246,7 @@ all_urls=(
   "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
 )
 # Essential apps
-essential_apps=("Screenshot Monitor" "Cursor" "Github Desktop" "Slack" "Obsidian" "1Password")
+essential_apps=("Cursor" "Github Desktop" "Slack" "Obsidian" "1Password" "Screenshot Monitor")
 # Additional apps
 all_apps=("Postman" "Notion" "Microsoft Outlook" "ChatGPT" "Microsoft Teams")
 
@@ -264,7 +264,7 @@ if [ "$launch_mode" = "1" ]; then
     apps=("${essential_apps[@]}")
 else
     open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
-    apps=("${essential_apps[@]}" "${all_apps[@]}")
+    apps=("${all_apps[@]}" "${essential_apps[@]}")
 fi
 
 # Open applications
