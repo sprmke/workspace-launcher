@@ -207,7 +207,7 @@ while true; do
             # Essential apps
             essential_apps=("Messenger")
             # Additional apps
-            all_apps=("Adobe Photoshop 2025" "Slack" "Microsoft Teams")
+            all_apps=("Adobe Photoshop 2025" "Slack" "Microsoft Teams" "ChatGPT")
             
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
@@ -239,7 +239,7 @@ while true; do
                 # Portfolio
                 "https://coinmarketcap.com/portfolio-tracker/"
                 # Trade
-                 "https://www.bitget.com/spot/BTCUSDT"
+                "https://www.bitget.com/spot/BTCUSDT"
                 
                 "https://www.okx.com/web3?chainIds=all&changePeriod=4&desc=true&liquidityMin=10000&periodType=4&rankBy=4&riskFilter=true&stableTokenFilter=true&tags=0&tokenAgeMax=30&tokenAgeType=1&tradeNumPeriod=4&txsPeriod=4&uniqueTraderPeriod=4&volumePeriod=4"
                 # Wallets
@@ -258,9 +258,9 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
             # Essential apps
-            # essential_apps=("Obsedian")
+            essential_apps=("Obsidian")
             # Additional apps
-            all_apps=("Slack" "Microsoft Teams")
+            all_apps=("Slack" "Microsoft Teams" "ChatGPT")
 
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
@@ -290,12 +290,13 @@ while true; do
             profile_path="Profile 1"
             # Essential URLs for Profile 1
             essential_urls=(
+                "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
                 "https://www.udemy.com/home/my-courses/learning/"
                 "https://github.com/sprmke"
-                "https://www.youtube.com/"
             )
             # Additional URLs
             all_urls=(
+                "https://www.youtube.com/"
                 "https://www.linkedin.com/messaging/"
             )
             # Essential apps
