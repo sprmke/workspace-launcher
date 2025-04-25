@@ -76,36 +76,29 @@ open_apps() {
     done
 }
 
-# Add global variable to store terminal window ID
-TERMINAL_WINDOW_ID=""
+# Add global variables to store terminal window IDs
+TERMINAL_WINDOW_ID_1=""
+TERMINAL_WINDOW_ID_2=""
 
-# Function to start dev server
-start_dev_server() {
-    # Check if port 5173 is in use and kill the process if it exists
-    if lsof -i :5173 > /dev/null; then
-        echo "Port 5173 is in use. Killing existing process..."
-        kill $(lsof -ti :5173)
-        sleep 1
-    fi
-
-    # Open Terminal and run dev server, storing the window ID
-    TERMINAL_WINDOW_ID=$(osascript <<EOF
-        tell application "Terminal"
-            activate
-            set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && pnpm dev"
-            return id of window 1
-        end tell
-EOF
-    )
-}
-
-# Function to close specific terminal window
+# Function to close specific terminal windows
 close_dev_terminal() {
-    if [ ! -z "$TERMINAL_WINDOW_ID" ]; then
+    if [ ! -z "$TERMINAL_WINDOW_ID_1" ]; then
         osascript <<EOF
             tell application "Terminal"
                 repeat with w in windows
-                    if id of w is $TERMINAL_WINDOW_ID then
+                    if id of w is $TERMINAL_WINDOW_ID_1 then
+                        close w
+                        exit repeat
+                    end if
+                end repeat
+            end tell
+EOF
+    fi
+    if [ ! -z "$TERMINAL_WINDOW_ID_2" ]; then
+        osascript <<EOF
+            tell application "Terminal"
+                repeat with w in windows
+                    if id of w is $TERMINAL_WINDOW_ID_2 then
                         close w
                         exit repeat
                     end if
@@ -198,6 +191,37 @@ display_countdown_and_menu() {
     done
 }
 
+# Function to start dev server
+start_dev_server() {
+    # Check if port 5173 is in use and kill the process if it exists
+    if lsof -i :5173 > /dev/null; then
+        echo "Port 5173 is in use. Killing existing process..."
+        kill $(lsof -ti :5173)
+        sleep 1
+    fi
+
+    # Open first Terminal window for ui-memories app
+    # set window1 to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && aws-vault exec mem-qa -- pnpm safebox export --format=\"dotenv\" --stage dev --output-file=\".env\" && pnpm dev"
+    TERMINAL_WINDOW_ID_1=$(osascript <<EOF
+        tell application "Terminal"
+            activate
+            set window1 to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && pnpm dev"
+            return id of window 1
+        end tell
+EOF
+    )
+
+    # Open second Terminal window for memories-website app
+    TERMINAL_WINDOW_ID_2=$(osascript <<EOF
+        tell application "Terminal"
+            activate
+            set window2 to do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev"
+            return id of window 1
+        end tell
+EOF
+    )
+}
+
 # Main script
 # Get duration with default value of 30 minutes
 clear
@@ -210,42 +234,38 @@ read -p "Enter duration in minutes before auto-close [30]: " duration
 duration=${duration:-30}  # Set default to 30 if empty
 duration_seconds=$(validate_duration "$duration")
 
-# Store profile path and apps
-profile_path="Profile 5"
-
-# Define essential and all apps/URLs
-essential_urls=(
-  "https://linear.app/memoriestech/team/MEM/active"
-)
-all_urls=(
-  "https://screenshotmonitor.com/myhome"
-  "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
-)
-# Essential apps
-essential_apps=("Screenshot Monitor" "Cursor" "Github Desktop" "Slack" "Notion" "1Password")
-# Additional apps
-all_apps=("Postman" "Obsidian" "Microsoft Outlook" "ChatGPT")
+# Open applications
+echo "Starting applications..."
+essential_apps=("Cursor" "Github Desktop" "Slack" "1Password" "Screenshot Monitor")
+all_apps=("Postman" "Notion" "Obsidian" "Microsoft Outlook" "ChatGPT" "Microsoft Teams")
+if [ "$launch_mode" = "1" ]; then
+    apps=("${essential_apps[@]}")
+else
+    apps=("${all_apps[@]}" "${essential_apps[@]}")
+fi
+open_apps "${apps[@]}"
 
 # Start the dev server
 echo "Starting dev server..."
 start_dev_server
 
-# Wait a bit for the dev server to start
-sleep 3
-
-# Open Chrome with specified profile and URLs based on launch mode
+# Open Chrome profiles
 echo "Starting Chrome with specified URLs..."
+profile_path="Profile 3"
+essential_urls=(
+  "https://screenshotmonitor.com/myhome"
+  "http://localhost:3000" # ui-memories
+  "http://localhost:3001" # memories-website
+  "https://linear.app/memoriestech/team/MEM/active"
+)
+all_urls=(
+  "https://ap-southeast-2.console.aws.amazon.com/console/home?region=ap-southeast-2"
+)
 if [ "$launch_mode" = "1" ]; then
     open_chrome "$profile_path" "${essential_urls[@]}"
-    apps=("${essential_apps[@]}")
 else
     open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
-    apps=("${essential_apps[@]}" "${all_apps[@]}")
 fi
-
-# Open applications
-echo "Starting applications..."
-open_apps "${apps[@]}"
 
 # Set initial end time using bc for calculation
 end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
