@@ -259,7 +259,7 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
             # Essential apps
-            essential_apps=("Obsidian")
+            essential_apps=("ChatGPT")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams" "ChatGPT")
 
@@ -301,9 +301,9 @@ while true; do
                 "https://www.linkedin.com/messaging/"
             )
             # Essential apps
-            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian")
+            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian" "ChatGPT")
             # Additional apps
-            all_apps=("Slack" "Microsoft Teams" "Microsoft Outlook" "pgAdmin 4" "ChatGPT")
+            all_apps=("Slack" "Microsoft Teams" "Microsoft Outlook" "pgAdmin 4")
             
             # Open Chrome with Profile 1
             if [ "$launch_mode" = "1" ]; then
