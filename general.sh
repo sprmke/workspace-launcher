@@ -223,6 +223,7 @@ while true; do
             profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
+                "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
                 "https://alternative.me/crypto/fear-and-greed-index/"
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/#"
