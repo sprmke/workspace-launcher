@@ -230,7 +230,7 @@ while true; do
                 "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
                 "https://www.bitget.com/spot/BTCUSDT"
-                "https://www.okx.com/web3?chainIds=all&changePeriod=4&desc=true&liquidityMin=10000&periodType=4&rankBy=4&riskFilter=true&stableTokenFilter=true&tags=0&tokenAgeMax=30&tokenAgeType=1&tradeNumPeriod=4&txsPeriod=4&uniqueTraderPeriod=4&volumePeriod=4"
+                "https://web3.okx.com/token/solana"
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://www.youtube.com/"
             )
@@ -241,7 +241,7 @@ while true; do
                 # Trade
                 "https://www.bitget.com/spot/BTCUSDT"
                 
-                "https://www.okx.com/web3?chainIds=all&changePeriod=4&desc=true&liquidityMin=10000&periodType=4&rankBy=4&riskFilter=true&stableTokenFilter=true&tags=0&tokenAgeMax=30&tokenAgeType=1&tradeNumPeriod=4&txsPeriod=4&uniqueTraderPeriod=4&volumePeriod=4"
+                "https://web3.okx.com/token/solana"
                 # Wallets
                 "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/asset"
