@@ -221,6 +221,7 @@ essential_urls=(
 all_urls=(
     "https://miro.com/app/board/uXjVPvGoz9U=/"
     "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors"
+    "https://bitbucket.org/auristech/fonetti-web/pull-requests/"
 )
 # Essential apps
 essential_apps=("Cursor" "Github Desktop" "Slack" "ChatGPT")
