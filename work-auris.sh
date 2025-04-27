@@ -215,6 +215,7 @@ profile_path="Default"
 
 # Define essential and all apps/URLs
 essential_urls=(
+    "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
     "http://localhost:5173/"
     "https://trello.com/b/iWR71DXf/web-app"
 )
