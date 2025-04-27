@@ -217,16 +217,15 @@ profile_path="Default"
 essential_urls=(
     "http://localhost:5173/"
     "https://trello.com/b/iWR71DXf/web-app"
-    "https://bitbucket.org/auristech/fonetti-web/commits/branch/main"
 )
 all_urls=(
     "https://miro.com/app/board/uXjVPvGoz9U=/"
     "https://app.bugsnag.com/auris-tech-ltd/fonetti-web-app/errors"
 )
 # Essential apps
-essential_apps=("Windsurf" "Github Desktop" "Slack")
+essential_apps=("Cursor" "Github Desktop" "Slack" "ChatGPT")
 # Additional apps
-all_apps=("Postman" "Obsidian" "Teams" "ChatGPT")
+all_apps=("Postman" "Obsidian" "Microsoft Teams")
 
 # Start the dev server
 echo "Starting dev server..."
