@@ -294,6 +294,7 @@ while true; do
                 "chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html"
                 "https://www.udemy.com/home/my-courses/learning/"
                 "https://github.com/sprmke"
+                "https://www.youtube.com/"
             )
             # Additional URLs
             all_urls=(
