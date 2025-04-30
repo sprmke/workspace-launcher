@@ -150,7 +150,7 @@ display_countdown_and_menu() {
                     echo -e "\nTime remaining: calculating..."
                     ;;
                 2)
-                    echo -e "\nClosing applications..."
+                    echo -e "\nClosing applications.."
                     close_apps "$profile_path" "${apps[@]}"
                     clear  # Clear screen before returning to main menu
                     return
