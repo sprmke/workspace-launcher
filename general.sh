@@ -150,7 +150,7 @@ display_countdown_and_menu() {
                     echo -e "\nTime remaining: calculating..."
                     ;;
                 2)
-                    echo -e "\nClosing applications.."
+                    echo -e "\nClosing applications..."
                     close_apps "$profile_path" "${apps[@]}"
                     clear  # Clear screen before returning to main menu
                     return
@@ -261,7 +261,7 @@ while true; do
             # Essential apps
             essential_apps=("ChatGPT")
             # Additional apps
-            all_apps=("Slack" "Microsoft Teams")
+            all_apps=("Slack" "Microsoft Teams" "ChatGPT")
 
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
