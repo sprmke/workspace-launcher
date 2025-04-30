@@ -339,7 +339,14 @@ while true; do
         display_countdown_and_menu "$profile_path" "${apps[@]}"
     else
         echo -e "\nNo auto-close timer set. Applications will remain open."
-        read -p "Press Enter to return to main menu..."
+        echo "1) Keep apps open and return to main menu"
+        echo "2) Close all apps and return to main menu"
+        read -p "Enter choice (1-2): " choice
+        
+        if [ "$choice" = "2" ]; then
+            echo -e "\nClosing applications..."
+            close_apps "$profile_path" "${apps[@]}"
+        fi
         clear
     fi
 done
