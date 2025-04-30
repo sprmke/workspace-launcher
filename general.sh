@@ -181,12 +181,14 @@ while true; do
     read -p "Enter choice (1-2): " launch_mode
     
     # Get duration with default value of 30 minutes
-    read -p "Enter duration in minutes before auto-close [30]: " duration
-    duration=${duration:-30}  # Set default to 30 if empty
-    duration_seconds=$(validate_duration "$duration")
-
-    # Set initial end time using bc for calculation
-    end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
+    read -p "Enter duration in minutes before auto-close [Press Enter for no auto-close]: " duration
+    
+    # Only proceed with timer if duration was provided
+    if [ -n "$duration" ]; then
+        duration_seconds=$(validate_duration "$duration")
+        # Set initial end time using bc for calculation
+        end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
+    fi
 
     # Store profile path and apps for the selected category
     profile_path=""
@@ -332,6 +334,12 @@ while true; do
             ;;
     esac
 
-    # Start countdown and menu display with profile path and apps
-    display_countdown_and_menu "$profile_path" "${apps[@]}"
+    # Only start countdown and menu display if duration was provided
+    if [ -n "$duration" ]; then
+        display_countdown_and_menu "$profile_path" "${apps[@]}"
+    else
+        echo -e "\nNo auto-close timer set. Applications will remain open."
+        read -p "Press Enter to return to main menu..."
+        clear
+    fi
 done
