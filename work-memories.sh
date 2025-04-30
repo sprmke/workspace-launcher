@@ -230,9 +230,14 @@ echo "1) Essential apps only"
 echo "2) All apps"
 read -p "Enter choice (1-2): " launch_mode
 
-read -p "Enter duration in minutes before auto-close [30]: " duration
-duration=${duration:-30}  # Set default to 30 if empty
-duration_seconds=$(validate_duration "$duration")
+read -p "Enter duration in minutes before auto-close [Press Enter for no auto-close]: " duration
+
+# Only proceed with timer if duration was provided
+if [ -n "$duration" ]; then
+    duration_seconds=$(validate_duration "$duration")
+    # Set initial end time using bc for calculation
+    end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
+fi
 
 # Open applications
 echo "Starting applications..."
@@ -267,8 +272,18 @@ else
     open_chrome "$profile_path" "${essential_urls[@]}" "${all_urls[@]}"
 fi
 
-# Set initial end time using bc for calculation
-end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
-
 # Start countdown and menu display with profile path and apps
-display_countdown_and_menu "$profile_path" "${apps[@]}"
+if [ -n "$duration" ]; then
+    display_countdown_and_menu "$profile_path" "${apps[@]}"
+else
+    echo -e "\nNo auto-close timer set. Applications will remain open."
+    echo "1) Keep apps open and return to main menu"
+    echo "2) Close all apps and return to main menu"
+    read -p "Enter choice (1-2): " choice
+    
+    if [ "$choice" = "2" ]; then
+        echo -e "\nClosing applications..."
+        close_apps "$profile_path" "${apps[@]}"
+    fi
+    clear
+fi
