@@ -232,6 +232,7 @@ while true; do
                 # Summarized daily crypto news in X
                 "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
+                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/spot/BTCUSDT"
                 "https://web3.okx.com/token/solana"
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
@@ -246,7 +247,6 @@ while true; do
                 
                 "https://web3.okx.com/token/solana"
                 # Wallets
-                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/asset"
                 "https://www.okx.com/balance/overview"
                 "https://www.bybit.com/user/assets/home/financial"
