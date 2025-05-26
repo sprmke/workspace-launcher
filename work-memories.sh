@@ -219,6 +219,16 @@ EOF
             return id of window 1
         end tell
 EOF
+    )    
+    
+    # Open third Terminal window for memories 2.0 app
+    TERMINAL_WINDOW_ID_3=$(osascript <<EOF
+        tell application "Terminal"
+            activate
+            set window3 to do script "cd /Users/memories/Projects/memories-projects/memories && docker-compose up -d postgres && aws-vault exec mem-dev -- pnpm sst dev --stage michael && aws-vault exec mem-dev -- pnpm db push --stage michael"
+            return id of window 1
+        end tell
+EOF
     )
 }
 
