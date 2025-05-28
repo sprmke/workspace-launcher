@@ -251,8 +251,8 @@ fi
 
 # Open applications
 echo "Starting applications..."
-essential_apps=("Google Chrome" "Cursor" "Github Desktop" "Slack" "1Password" "Screenshot Monitor" "Docker Desktop" "ChatGPT")
-all_apps=("Postman" "Notion" "Obsidian" "Microsoft Outlook" "Microsoft Teams")
+essential_apps=("Google Chrome" "Cursor" "Github Desktop" "Slack" "1Password" "Screenshot Monitor" "Docker Desktop" "ChatGPT" "Obsidian")
+all_apps=("Postman" "Notion" "Microsoft Outlook" "Microsoft Teams")
 if [ "$launch_mode" = "1" ]; then
     apps=("${essential_apps[@]}")
 else
