@@ -304,7 +304,7 @@ while true; do
                 "https://www.linkedin.com/messaging/"
             )
             # Essential apps
-            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian")
+            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian" "ChatGPT")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams" "Microsoft Outlook" "pgAdmin 4")
             
