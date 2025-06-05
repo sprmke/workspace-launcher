@@ -304,6 +304,7 @@ while true; do
             
             # Open the selected applications
             open_apps "${apps[@]}"
+            ;;
         4)  # Study
             profile_path="Profile 1"
             # Essential URLs for Profile 1
