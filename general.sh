@@ -277,6 +277,7 @@ while true; do
             # Essential URLs
             essential_urls=(
                 "https://www.investagrams.com/News/"
+                "https://www.investagrams.com/Social/"
                 "https://www.investagrams.com/?asset=ph"
                 "https://www.investagrams.com/Portfolio/PortfolioDashboard/"
                 "https://trade.dragonfi.ph/"
