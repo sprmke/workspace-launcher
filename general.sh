@@ -274,16 +274,36 @@ while true; do
             ;;
         3)  # Stock
             profile_path="Profile 7"
-            open_chrome "$profile_path" \
-                "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
-                "https://www.investagrams.com/" \
-                "https://trade.dragonfi.ph/" \
-                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
-                "https://www.investagrams.com/News/" \
-                "https://simplywall.st/compare/PSE%3AAREIT%2CPSE%3AMREIT%2CPSE%3ACREIT%2CPSE%3ARCR%2CPSE%3AFILRT%2CPSE%3ADDMPR" \
-                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003" \
+            # Essential URLs
+            essential_urls=(
+                "https://www.investagrams.com/News/"
+                "https://www.investagrams.com/?asset=ph"
+                "https://www.investagrams.com/Portfolio/PortfolioDashboard/"
+                "https://trade.dragonfi.ph/"
+                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp"
                 "https://www.youtube.com/"
-            ;;
+            )
+            # Additional URLs
+            all_urls=(
+                "https://simplywall.st/compare/PSE%3AAREIT%2CPSE%3AMREIT%2CPSE%3ACREIT%2CPSE%3ARCR%2CPSE%3AFILRT%2CPSE%3ADDMPR"
+                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003"
+            )
+            # Essential apps
+            essential_apps=("ChatGPT")
+            # Additional apps
+            all_apps=("Slack" "Microsoft Teams")
+
+            # Open Chrome with appropriate URLs based on launch mode
+            if [ "$launch_mode" = "1" ]; then
+                open_chrome "$profile_path" "${essential_urls[@]}"
+                apps=("${essential_apps[@]}")
+            else
+                open_chrome "$profile_path" "${all_urls[@]}"
+                apps=("${essential_apps[@]}" "${all_apps[@]}")
+            fi
+            
+            # Open the selected applications
+            open_apps "${apps[@]}"
         4)  # Study
             profile_path="Profile 1"
             # Essential URLs for Profile 1
