@@ -225,17 +225,13 @@ while true; do
             profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
-                "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
                 "https://alternative.me/crypto/fear-and-greed-index/"
+                "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/#"
-                # Summarized daily crypto news in X
                 "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
-                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/spot/BTCUSDT"
-                "https://web3.okx.com/token/solana"
-                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://www.youtube.com/"
             )
             # Additional URLs
@@ -243,20 +239,19 @@ while true; do
                 # Portfolio
                 "https://coinmarketcap.com/portfolio-tracker/"
                 # Trade
-                "https://www.bitget.com/spot/BTCUSDT"
-                
                 "https://web3.okx.com/token/solana"
                 # Wallets
+                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/asset"
                 "https://www.okx.com/balance/overview"
                 "https://www.bybit.com/user/assets/home/financial"
                 # News
                 "https://cointelegraph.com/category/latest-news"
-                "https://cryptopanic.com/"
                 "https://www.investagrams.com/News/"
                 "https://www.todayonchain.com/"
                 "https://www.youtube.com/"
-                # Reports
+                # Spreadsheets
+                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
