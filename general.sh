@@ -317,7 +317,6 @@ while true; do
             )
             # Additional URLs
             all_urls=(
-                "https://www.youtube.com/"
                 "https://www.linkedin.com/messaging/"
             )
             # Essential apps
