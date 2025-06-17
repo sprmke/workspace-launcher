@@ -228,6 +228,7 @@ while true; do
                 "https://alternative.me/crypto/fear-and-greed-index/"
                 "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
                 "https://www.coindesk.com/"
+                "https://www.investagrams.com/News/"
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/#"
                 "https://banterbubbles.com/"
