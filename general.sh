@@ -344,7 +344,8 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/18_xpANJbYqf53RStc-x9bROy1Xjm04KB1s60yjOgF0E" \
                 "https://docs.google.com/spreadsheets/d/19H2ixczbupOp1O91Nh3IRRl-X2iVOSei50b1VtZugBw" \
                 "https://docs.google.com/spreadsheets/d/1VHLSZxaTcm7IKI16Wkz_PDw6S7ZQsohRGap15EhfjzM" \
-                "https://docs.google.com/spreadsheets/d/1H7oUwjkkPbMS29k31VlQ90pm9uQaGe1EzHFfawPvtFM"
+                "https://docs.google.com/spreadsheets/d/1H7oUwjkkPbMS29k31VlQ90pm9uQaGe1EzHFfawPvtFM" \
+                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk" \
             ;;
         *)
             echo "Invalid choice"
