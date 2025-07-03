@@ -230,6 +230,16 @@ EOF
         end tell
 EOF
     )
+
+    # Open fourth Terminal window for memories 2.0 app
+    TERMINAL_WINDOW_ID_4=$(osascript <<EOF
+        tell application "Terminal"
+            activate
+            set window4 to do script "cd /Users/memories/Projects/memories-projects/futuremefinance && npm run dev"
+            return id of window 1
+        end tell
+EOF
+    )
 }
 
 # Main script
