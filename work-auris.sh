@@ -230,9 +230,9 @@ all_urls=(
     "https://bitbucket.org/auristech/fonetti-web/pull-requests/"
 )
 # Essential apps
-essential_apps=("Cursor" "Github Desktop" "Slack" "ChatGPT")
+essential_apps=("Cursor" "Github Desktop" "Slack")
 # Additional apps
-all_apps=("Postman" "Obsidian" "Microsoft Teams")
+all_apps=("Postman" "Obsidian" "Microsoft Teams" "ChatGPT")
 
 # Start the dev server
 echo "Starting dev server..."
