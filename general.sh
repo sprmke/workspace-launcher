@@ -225,17 +225,15 @@ while true; do
             profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
-                "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
                 "https://alternative.me/crypto/fear-and-greed-index/"
+                "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
+                "https://www.coindesk.com/"
+                "https://www.investagrams.com/News/"
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/#"
-                # Summarized daily crypto news in X
                 "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
-                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/spot/BTCUSDT"
-                "https://web3.okx.com/token/solana"
-                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://www.youtube.com/"
             )
             # Additional URLs
@@ -243,27 +241,26 @@ while true; do
                 # Portfolio
                 "https://coinmarketcap.com/portfolio-tracker/"
                 # Trade
-                "https://www.bitget.com/spot/BTCUSDT"
-                
                 "https://web3.okx.com/token/solana"
                 # Wallets
+                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.bitget.com/asset"
                 "https://www.okx.com/balance/overview"
                 "https://www.bybit.com/user/assets/home/financial"
                 # News
                 "https://cointelegraph.com/category/latest-news"
-                "https://cryptopanic.com/"
                 "https://www.investagrams.com/News/"
                 "https://www.todayonchain.com/"
                 "https://www.youtube.com/"
-                # Reports
+                # Spreadsheets
+                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
             # Essential apps
             essential_apps=("ChatGPT")
             # Additional apps
-            all_apps=("Slack" "Microsoft Teams" "ChatGPT")
+            all_apps=("Slack" "Microsoft Teams")
 
             # Open Chrome with appropriate URLs based on launch mode
             if [ "$launch_mode" = "1" ]; then
@@ -279,15 +276,37 @@ while true; do
             ;;
         3)  # Stock
             profile_path="Profile 7"
-            open_chrome "$profile_path" \
-                "https://www.investagrams.com/Portfolio/PortfolioDashboard/" \
-                "https://www.investagrams.com/" \
-                "https://trade.dragonfi.ph/" \
-                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp" \
-                "https://www.investagrams.com/News/" \
-                "https://simplywall.st/compare/PSE%3AAREIT%2CPSE%3AMREIT%2CPSE%3ACREIT%2CPSE%3ARCR%2CPSE%3AFILRT%2CPSE%3ADDMPR" \
-                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003" \
+            # Essential URLs
+            essential_urls=(
+                "https://www.investagrams.com/News/"
+                "https://www.investagrams.com/Social/"
+                "https://www.investagrams.com/?asset=ph"
+                "https://www.investagrams.com/Portfolio/PortfolioDashboard/"
+                "https://trade.dragonfi.ph/"
+                "https://svr2.colfinancial.com/ape/FINAL2_STARTER/HOME/HOME.asp"
                 "https://www.youtube.com/"
+            )
+            # Additional URLs
+            all_urls=(
+                "https://simplywall.st/compare/PSE%3AAREIT%2CPSE%3AMREIT%2CPSE%3ACREIT%2CPSE%3ARCR%2CPSE%3AFILRT%2CPSE%3ADDMPR"
+                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003"
+            )
+            # Essential apps
+            essential_apps=("ChatGPT")
+            # Additional apps
+            all_apps=("Slack" "Microsoft Teams")
+
+            # Open Chrome with appropriate URLs based on launch mode
+            if [ "$launch_mode" = "1" ]; then
+                open_chrome "$profile_path" "${essential_urls[@]}"
+                apps=("${essential_apps[@]}")
+            else
+                open_chrome "$profile_path" "${all_urls[@]}"
+                apps=("${essential_apps[@]}" "${all_apps[@]}")
+            fi
+            
+            # Open the selected applications
+            open_apps "${apps[@]}"
             ;;
         4)  # Study
             profile_path="Profile 1"
@@ -300,11 +319,10 @@ while true; do
             )
             # Additional URLs
             all_urls=(
-                "https://www.youtube.com/"
                 "https://www.linkedin.com/messaging/"
             )
             # Essential apps
-            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian" "ChatGPT" "FocusPomo")
+            essential_apps=("Cursor" "Github Desktop" "Notion" "Obsidian" "ChatGPT")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams" "Microsoft Outlook" "pgAdmin 4")
             
@@ -326,7 +344,10 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/18_xpANJbYqf53RStc-x9bROy1Xjm04KB1s60yjOgF0E" \
                 "https://docs.google.com/spreadsheets/d/19H2ixczbupOp1O91Nh3IRRl-X2iVOSei50b1VtZugBw" \
                 "https://docs.google.com/spreadsheets/d/1VHLSZxaTcm7IKI16Wkz_PDw6S7ZQsohRGap15EhfjzM" \
-                "https://docs.google.com/spreadsheets/d/1H7oUwjkkPbMS29k31VlQ90pm9uQaGe1EzHFfawPvtFM"
+                "https://docs.google.com/spreadsheets/d/1H7oUwjkkPbMS29k31VlQ90pm9uQaGe1EzHFfawPvtFM" \
+                "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk" \
+                "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M" \
+                "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw" \
             ;;
         *)
             echo "Invalid choice"
