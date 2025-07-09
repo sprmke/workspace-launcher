@@ -258,7 +258,7 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/15vfj4cTNNCfgs5qnrAjbzCiv2zrBIFzAt2MkpV0jMCg"
             )
             # Essential apps
-            essential_apps=("ChatGPT")
+            essential_apps=("Discord" "ChatGPT")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams")
 
@@ -292,7 +292,7 @@ while true; do
                 "https://docs.google.com/spreadsheets/d/1jAXEv6Io8nByaktHgkr11VF44QFfyCdjIVsTF3BAbrk/edit?gid=1965420003#gid=1965420003"
             )
             # Essential apps
-            essential_apps=("ChatGPT")
+            essential_apps=("Discord" "ChatGPT")
             # Additional apps
             all_apps=("Slack" "Microsoft Teams")
 
