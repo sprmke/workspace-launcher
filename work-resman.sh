@@ -141,33 +141,6 @@ check_and_kill_ports() {
     fi
 }
 
-# Function to load environment variables
-# load_env_vars() {
-#     # Check for Zeki environment file
-#     if [ -f "/Users/resman/Projects/resman-projects/envs/.env.zeki" ]; then
-#         export $(cat /Users/resman/Projects/resman-projects/envs/.env.zeki | xargs)
-#     else
-#         echo "Error: .env.zeki file not found in envs directory"
-#         exit 1
-#     fi
-
-#     # Check for Zeki V2 environment file
-#     if [ -f "/Users/resman/Projects/resman-projects/envs/.env.zeki-v2" ]; then
-#         export $(cat /Users/resman/Projects/resman-projects/envs/.env.zeki-v2 | xargs)
-#     else
-#         echo "Error: .env.zeki-v2 file not found in envs directory"
-#         exit 1
-#     fi
-
-#     # Check for MyRazz SSR environment file 
-#     if [ -f "/Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr" ]; then
-#         export $(cat /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr | xargs)
-#     else
-#         echo "Error: .env.myrazz-ssr file not found in envs directory"
-#         exit 1
-#     fi
-# }
-
 # Function to start dev servers with improved error handling
 start_dev_servers() {
     echo "Starting dev servers..."
