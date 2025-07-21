@@ -250,11 +250,6 @@ while true; do
             all_urls=(
                 # Trade
                 "https://web3.okx.com/token/solana"
-                # Wallets
-                "https://www.binance.com/en/my/wallet/account/overview"
-                "https://www.bitget.com/asset"
-                "https://www.okx.com/balance/overview"
-                "https://www.bybit.com/user/assets/home/financial"
                 # News
                 "https://cointelegraph.com/category/latest-news"
                 "https://www.investagrams.com/News/"
