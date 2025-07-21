@@ -141,79 +141,6 @@ check_and_kill_ports() {
     fi
 }
 
-# Function to start dev servers with improved error handling
-start_dev_servers() {
-    echo "Starting dev servers..."
-
-    # Check and kill processes on specific ports
-    check_and_kill_ports
-
-    # Clear any existing terminal IDs
-    rm -f /tmp/dev_terminal_ids
-
-    # Open first Terminal window for Zeki
-    WINDOW1_ID=$(osascript <<EOF
-        tell application "Terminal"
-            # Create new window and get its ID
-            set win to do script ""
-            set win_id to id of window 1
-            
-            # First tab - Zeki Dashboard
-            do script "cd /Users/resman/Projects/resman-projects/zeki/packages/dashboard && pkill -f 'meteor run' || true && sleep 2 && source /Users/resman/Projects/resman-projects/envs/.env.zeki && meteor run --settings settings-local.json --port 4000" in win
-            
-            # Create and setup second tab
-            tell application "System Events" to keystroke "t" using command down
-            delay 5
-            do script "cd /Users/resman/Projects/resman-projects/zeki/packages/frontend && source /Users/resman/Projects/resman-projects/envs/.env.zeki && meteor run --settings settings-local.json" in window 1
-            delay 5
-            return win_id
-        end tell
-EOF
-    )
-    store_terminal_id "$WINDOW1_ID"
-
-    # Open second Terminal window for SSR components
-    WINDOW2_ID=$(osascript <<EOF
-        tell application "Terminal"
-            # Create new window and get its ID
-            set win to do script ""
-            set win_id to id of window 1
-            
-            # First tab - Editor Dev (no MongoDB dependency)
-            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=editor" in win
-            
-            # Create and setup second tab - Viewer Dev
-            tell application "System Events" to keystroke "t" using command down
-            delay 5
-            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && source /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr && export \$(cat /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr | xargs) && NODE_OPTIONS='--loader ts-node/esm' /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=viewer" in window 1
-            
-            # Create and setup third tab - Server Dev
-            tell application "System Events" to keystroke "t" using command down
-            delay 5
-            do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && source /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr && export \$(cat /Users/resman/Projects/resman-projects/envs/.env.myrazz-ssr | xargs) && NODE_OPTIONS='--loader ts-node/esm' /Users/resman/.nvm/versions/node/v20.13.1/bin/npm run dev --workspace=server" in window 1
-            
-            return win_id
-        end tell
-EOF
-    )
-    store_terminal_id "$WINDOW2_ID"
-
-    # Open third Terminal window for serverless
-    WINDOW3_ID=$(osascript <<EOF
-        tell application "Terminal"
-            # Create new window and get its ID
-            set win to do script ""
-            set win_id to id of window 1
-            
-            do script "cd /Users/resman/Projects/resman-projects/zeki-v2/serverless && ln -sf /Users/resman/Projects/resman-projects/envs/.env.zeki-v2 .env && set -a && . /Users/resman/Projects/resman-projects/envs/.env.zeki-v2 && set +a && TH=1 npm run dev" in win
-
-            return win_id
-        end tell
-EOF
-    )
-    store_terminal_id "$WINDOW3_ID"
-}
-
 # Function to open Chrome with specific profile and URLs in a single window
 open_chrome() {
     profile_path=$1
@@ -335,12 +262,6 @@ if [ -n "$duration" ]; then
     # Set initial end time using bc for calculation
     end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
 fi
-
-# Start the dev servers
-# start_dev_servers
-
-# Wait for servers to start
-sleep 10
 
 # Open Chrome profile with specified URLs
 echo "Starting Chrome with specified URLs..."
