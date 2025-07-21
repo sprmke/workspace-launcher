@@ -237,6 +237,8 @@ while true; do
                 "https://www.bitget.com/asset"
                 "https://www.bybit.com/en/trade/spot/BTC/USDT"
                 "https://www.bybit.com/user/assets/home/tradingaccount"
+                "https://www.okx.com/trade-spot/btc-usdt"
+                "https://www.okx.com/balance/overview"
                 "https://www.youtube.com/"
             )
             # Additional URLs
