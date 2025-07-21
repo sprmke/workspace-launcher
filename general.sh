@@ -227,7 +227,6 @@ while true; do
             essential_urls=(
                 "https://alternative.me/crypto/fear-and-greed-index/"
                 "https://banterbubbles.com/"
-                "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
                 # News
                 "https://www.coindesk.com/"
                 "https://www.investagrams.com/News/"
