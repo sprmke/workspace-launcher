@@ -250,11 +250,6 @@ while true; do
             all_urls=(
                 # Trade
                 "https://web3.okx.com/token/solana"
-                # News
-                "https://cointelegraph.com/category/latest-news"
-                "https://www.investagrams.com/News/"
-                "https://www.todayonchain.com/"
-                "https://www.youtube.com/"
                 # Spreadsheets
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M/edit?gid=8547549#gid=8547549"
                 "https://docs.google.com/spreadsheets/d/1btnGvfGDEqGIiOj_1pEoelv3PdyVG9lqpv_MZBy2m-M"
