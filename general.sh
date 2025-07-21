@@ -226,13 +226,16 @@ while true; do
             # Essential URLs
             essential_urls=(
                 "https://alternative.me/crypto/fear-and-greed-index/"
+                "https://banterbubbles.com/"
                 "https://wise.com/gb/currency-converter/usd-to-php-rate?amount=1000"
+                # News
                 "https://www.coindesk.com/"
                 "https://www.investagrams.com/News/"
                 "https://cointelegraph.com/category/latest-news"
                 "https://cryptopanic.com/#"
-                "https://banterbubbles.com/"
+                # Portfolio
                 "https://coinmarketcap.com/portfolio-tracker/"
+                # Trade
                 "https://www.bitget.com/spot/BTCUSDT"
                 "https://www.bitget.com/asset"
                 "https://www.bybit.com/en/trade/spot/BTC/USDT"
@@ -245,8 +248,6 @@ while true; do
             )
             # Additional URLs
             all_urls=(
-                # Portfolio
-                "https://coinmarketcap.com/portfolio-tracker/"
                 # Trade
                 "https://web3.okx.com/token/solana"
                 # Wallets
