@@ -239,6 +239,8 @@ while true; do
                 "https://www.bybit.com/user/assets/home/tradingaccount"
                 "https://www.okx.com/trade-spot/btc-usdt"
                 "https://www.okx.com/balance/overview"
+                "https://www.binance.com/en/trade/BTC_USDT?type=spot"
+                "https://www.binance.com/en/my/wallet/account/overview"
                 "https://www.youtube.com/"
             )
             # Additional URLs
