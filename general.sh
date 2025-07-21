@@ -234,6 +234,7 @@ while true; do
                 "https://banterbubbles.com/"
                 "https://coinmarketcap.com/portfolio-tracker/"
                 "https://www.bitget.com/spot/BTCUSDT"
+                "https://www.bitget.com/asset"
                 "https://www.youtube.com/"
             )
             # Additional URLs
