@@ -225,6 +225,7 @@ while true; do
             profile_path="Profile 6"
             # Essential URLs
             essential_urls=(
+                # Market Status
                 "https://alternative.me/crypto/fear-and-greed-index/"
                 "https://banterbubbles.com/"
                 # News
