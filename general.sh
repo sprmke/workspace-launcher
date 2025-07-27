@@ -24,7 +24,7 @@ validate_duration() {
     fi
 }
 
-# Function to close apps
+# Close opened apps
 close_apps() {
     local profile_path=$1
     
