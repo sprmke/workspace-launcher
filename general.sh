@@ -4,7 +4,7 @@
 end_time=0
 timer_pid=""
 
-# Function to clear previous lines
+# Clear previous lines
 clear_lines() {
     local lines=$1
     for ((i=0; i<lines; i++)); do
