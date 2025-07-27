@@ -160,7 +160,7 @@ display_countdown_and_menu() {
     done
 }
 
-# Main loop for category selection
+# Category selection
 while true; do
     echo "Select workspace:"
     echo "1) Condo"
