@@ -80,7 +80,7 @@ focus_terminal() {
     osascript -e 'tell application "Terminal" to activate'
 }
 
-# Function to display countdown and menu
+# Display countdown and menu
 display_countdown_and_menu() {
     local profile_path=$1
     shift
