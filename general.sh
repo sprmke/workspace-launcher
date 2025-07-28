@@ -67,7 +67,7 @@ open_chrome() {
     done
 }
 
-# Function to open applications
+# Open applications
 open_apps() {
     echo "Starting applications..."
     for app in "$@"; do
