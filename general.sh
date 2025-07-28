@@ -75,7 +75,7 @@ open_apps() {
     done
 }
 
-# Function to focus terminal window
+# Focus terminal window
 focus_terminal() {
     osascript -e 'tell application "Terminal" to activate'
 }
