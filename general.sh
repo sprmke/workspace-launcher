@@ -41,7 +41,7 @@ close_apps() {
     sleep 3
 }
 
-# Function to open Chrome with specific profile and URLs in a single window
+# Open Chrome with specific profile and URLs in a single window
 open_chrome() {
     local current_profile=$1
     echo "Starting Chrome with profile: $current_profile..."
