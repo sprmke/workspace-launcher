@@ -236,6 +236,7 @@ while true; do
                 # Portfolio
                 "https://coinmarketcap.com/portfolio-tracker/"
                 # Trade
+                "https://www.tradingview.com/chart/6KhPW0ff/?symbol=CRYPTOCAP%3ABTC.D"
                 "https://www.bitget.com/spot/BTCUSDT"
                 "https://www.bitget.com/asset"
                 "https://www.bybit.com/en/trade/spot/BTC/USDT"
