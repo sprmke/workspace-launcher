@@ -4,7 +4,7 @@
 end_time=0
 timer_pid=""
 
-# Function to clear previous lines
+# Clear previous lines
 clear_lines() {
     local lines=$1
     for ((i=0; i<lines; i++)); do
@@ -12,7 +12,7 @@ clear_lines() {
     done
 }
 
-# Function to validate duration and convert to seconds
+# Validate duration and convert to seconds
 validate_duration() {
     local input=$1
     # Check if input is a valid number (integer or float)
@@ -24,7 +24,7 @@ validate_duration() {
     fi
 }
 
-# Function to close applications
+# Close opened apps
 close_apps() {
     local profile_path=$1
     
@@ -41,7 +41,7 @@ close_apps() {
     sleep 3
 }
 
-# Function to open Chrome with specific profile and URLs in a single window
+# Open Chrome with specific profile and URLs in a single window
 open_chrome() {
     local current_profile=$1
     echo "Starting Chrome with profile: $current_profile..."
@@ -67,7 +67,7 @@ open_chrome() {
     done
 }
 
-# Function to open applications
+# Open applications
 open_apps() {
     echo "Starting applications..."
     for app in "$@"; do
@@ -75,12 +75,12 @@ open_apps() {
     done
 }
 
-# Function to focus terminal window
+# Focus terminal window
 focus_terminal() {
     osascript -e 'tell application "Terminal" to activate'
 }
 
-# Function to display countdown and menu
+# Display countdown and menu
 display_countdown_and_menu() {
     local profile_path=$1
     shift
@@ -160,7 +160,7 @@ display_countdown_and_menu() {
     done
 }
 
-# Main loop for category selection
+# Category selection
 while true; do
     echo "Select workspace:"
     echo "1) Condo"
