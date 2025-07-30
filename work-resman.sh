@@ -291,3 +291,5 @@ else
     fi
     clear
 fi
+
+# TODO: Start dev server and get it from VSC Run terminal script
