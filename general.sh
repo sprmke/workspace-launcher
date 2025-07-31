@@ -202,9 +202,6 @@ while true; do
             profile_path="Profile 8"
             # Essential URLs
             essential_urls=(
-                "https://business.facebook.com/latest/inbox/all/"
-                "https://business.facebook.com/latest/content_calendar"
-                "https://docs.google.com/spreadsheets/d/1KE2_LJ-ydOSr2VhvkLrfMMGd66gPwvq5SLhG9KnuOQw"
             )
             # Essential apps
             essential_apps=("Messenger")
