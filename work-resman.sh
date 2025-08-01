@@ -393,7 +393,7 @@ fi
 
 # Open specified applications
 echo "Starting applications..."
-apps=("Studio 3T" "Github Desktop" "Slack" "Microsoft Teams" "Obsidian" "Cursor")
+apps=("Github Desktop" "Slack" "Microsoft Teams" "Obsidian" "Cursor")
 open_apps "${apps[@]}"
 
 # Only start countdown and menu display if duration was provided
