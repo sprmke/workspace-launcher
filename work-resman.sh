@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# ENVIRONMENT VARIABLES REQUIRED:
+# Before running this script, set these environment variables:
+# export API_KEY="your_api_key"
+# export AWS_ACCESS_KEY_ID="your_aws_access_key_id"  
+# export AWS_REGION="us-east-1"
+# export AWS_SECRET_ACCESS_KEY="your_aws_secret_access_key"
+# export RESMAN_INTEGRATION_PARTNER_ID="your_partner_id"
+# export SENDGRID_API_KEY="your_sendgrid_api_key"
+# export UPLOADCARE_PRIVATE="your_uploadcare_private_key"
+# export UPLOADCARE_PUBLIC="your_uploadcare_public_key"
+# export YELP_AUTH="your_yelp_auth_token"
+
 # Global variables for timer management
 end_time=0
 timer_pid=""
@@ -218,7 +230,7 @@ EOF
                 window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set newWindow to do script "cd /Users/resman/Projects/resman-projects/zeki-v2/serverless && API_KEY=$API_KEY AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_REGION=us-east-1 AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY RESMAN_INTEGRATION_PARTNER_ID=$RESMAN_INTEGRATION_PARTNER_ID SENDGRID_API_KEY=$SENDGRID_API_KEY UPLOADCARE_PRIVATE=$UPLOADCARE_PRIVATE UPLOADCARE_PUBLIC=$UPLOADCARE_PUBLIC YELP_AUTH=$YELP_AUTH npm run dev"
+                        set newWindow to do script "cd /Users/resman/Projects/resman-projects/zeki-v2/serverless && API_KEY=$API_KEY AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_REGION=$AWS_REGION AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY RESMAN_INTEGRATION_PARTNER_ID=$RESMAN_INTEGRATION_PARTNER_ID SENDGRID_API_KEY=$SENDGRID_API_KEY UPLOADCARE_PRIVATE=$UPLOADCARE_PRIVATE UPLOADCARE_PUBLIC=$UPLOADCARE_PUBLIC YELP_AUTH=$YELP_AUTH npm run dev"
                         return id of window 1
                     end tell
 EOF
