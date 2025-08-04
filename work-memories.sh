@@ -55,10 +55,10 @@ validate_duration() {
 check_and_kill_ports() {
     echo "Checking and cleaning up ports..."
     
-    # Kill any existing pnpm and npm processes first
-    if pgrep -f "pnpm dev" > /dev/null; then
-        echo "Killing existing pnpm dev processes..."
-        pkill -f "pnpm dev"
+    # Kill any existing bun and npm processes first
+    if pgrep -f "bun dev" > /dev/null; then
+        echo "Killing existing bun dev processes..."
+        pkill -f "bun dev"
         sleep 2
     fi
     
@@ -87,7 +87,7 @@ check_and_kill_ports() {
 # Function to close specific terminal windows
 close_dev_terminals() {
     # First kill any running dev processes
-    pkill -f "pnpm dev"
+    pkill -f "bun dev"
     pkill -f "npm run dev"
     pkill -f "sst dev"
     
@@ -137,7 +137,7 @@ close_apps() {
     done
 
     # Kill all dev server processes
-    pkill -f "pnpm dev"
+    pkill -f "bun dev"
     pkill -f "npm run dev"
     pkill -f "sst dev"
 }
@@ -273,7 +273,7 @@ start_dev_servers() {
                 window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && pnpm dev"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && bun dev"
                         return id of window 1
                     end tell
 EOF
@@ -285,7 +285,7 @@ EOF
                 window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- bun sst dev"
                         return id of window 1
                     end tell
 EOF
@@ -297,7 +297,7 @@ EOF
                 window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memories && docker-compose up -d postgres && aws-vault exec mem-dev -- pnpm sst dev --stage michael && aws-vault exec mem-dev -- pnpm db push --stage michael"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memories && docker-compose up -d postgres && aws-vault exec mem-dev -- bun sst dev --stage michael && aws-vault exec mem-dev -- bun db push --stage michael"
                         return id of window 1
                     end tell
 EOF
