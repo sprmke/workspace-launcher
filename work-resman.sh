@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# ENVIRONMENT VARIABLES REQUIRED:
+# Before running this script, set these environment variables:
+# export API_KEY="your_api_key"
+# export AWS_ACCESS_KEY_ID="your_aws_access_key_id"  
+# export AWS_REGION="us-east-1"
+# export AWS_SECRET_ACCESS_KEY="your_aws_secret_access_key"
+# export RESMAN_INTEGRATION_PARTNER_ID="your_partner_id"
+# export SENDGRID_API_KEY="your_sendgrid_api_key"
+# export UPLOADCARE_PRIVATE="your_uploadcare_private_key"
+# export UPLOADCARE_PUBLIC="your_uploadcare_public_key"
+# export YELP_AUTH="your_yelp_auth_token"
+
 # Global variables for timer management
 end_time=0
 timer_pid=""
@@ -94,7 +106,7 @@ EOF
 # Function to close applications
 close_apps() {
     # Close the terminal windows first
-    # close_dev_terminals
+    close_dev_terminals
 
     local profile_path=$1
     
@@ -109,6 +121,7 @@ close_apps() {
 
     # Kill all dev server processes
     pkill -f "npm run dev"
+    pkill -f "meteor run"
 }
 
 
@@ -117,15 +130,21 @@ close_apps() {
 check_and_kill_ports() {
     echo "Checking and cleaning up ports..."
     
-    # Kill any existing meteor processes first
+    # Kill any existing meteor and npm processes first
     if pgrep -f "meteor run" > /dev/null; then
         echo "Killing existing Meteor processes..."
         pkill -f "meteor run"
         sleep 2
     fi
+    
+    if pgrep -f "npm run dev" > /dev/null; then
+        echo "Killing existing npm run dev processes..."
+        pkill -f "npm run dev"
+        sleep 2
+    fi
 
-    # Check and kill processes on specific ports
-    for port in 4000 3000 3001 3005 3006 3007; do
+    # Check and kill processes on specific ports (including common dev server ports)
+    for port in 4000 3000 3001 3005 3006 3007 5173 8080; do
         if lsof -i :$port > /dev/null; then
             echo "Port $port is in use. Killing existing process..."
             kill $(lsof -ti :$port)
@@ -170,6 +189,55 @@ open_chrome() {
 open_apps() {
     for app in "$@"; do
         osascript -e "tell application \"$app\" to activate"
+    done
+}
+
+# Function to start dev servers
+start_dev_servers() {
+    local selected_projects=("$@")
+    
+    echo "Starting dev servers for selected projects..."
+    
+    # Start selected projects
+    for project in "${selected_projects[@]}"; do
+        case $project in
+            "zeki")
+                echo "Starting zeki (dashboard)..."
+                window_id=$(osascript <<EOF
+                    tell application "Terminal"
+                        activate
+                        set newWindow to do script "cd /Users/resman/Projects/zeki/packages/dashboard && MONGODB_FRONTEND_URI=mongodb://localhost:3001/meteor MONGODB_FRONTEND_V2_URI=mongodb://localhost:27018/sites SERVICES=cron,lead,conversation,email,importer,app,share,siteImporter,taskScheduler,taskRunner,appList,library,imageUploadQueue,migration,layer,integrationScheduler,jobScheduler,rentCafeScheduler,rolesSync,apiLogsReportScheduler,platformAnalyticsRunner,platformAnalyticsReportRunner,screensSSRSync PATH=\$PATH:/Users/resman/.meteor /Users/resman/.nvm/versions/node/v14.21.3/bin/npm run dev"
+                        return id of window 1
+                    end tell
+EOF
+                )
+                store_terminal_id "$window_id"
+                ;;
+            "myrazz-ssr")
+                echo "Starting myrazz-ssr..."
+                window_id=$(osascript <<EOF
+                    tell application "Terminal"
+                        activate
+                        set newWindow to do script "cd /Users/resman/Projects/resman-projects/myrazz-ssr && MONGODB_URI=mongodb://localhost:27018/sites npm run dev --workspace=editor"
+                        return id of window 1
+                    end tell
+EOF
+                )
+                store_terminal_id "$window_id"
+                ;;
+            "zeki-v2")
+                echo "Starting zeki-v2 (serverless)..."
+                window_id=$(osascript <<EOF
+                    tell application "Terminal"
+                        activate
+                        set newWindow to do script "cd /Users/resman/Projects/resman-projects/zeki-v2/serverless && API_KEY=$API_KEY AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_REGION=$AWS_REGION AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY RESMAN_INTEGRATION_PARTNER_ID=$RESMAN_INTEGRATION_PARTNER_ID SENDGRID_API_KEY=$SENDGRID_API_KEY UPLOADCARE_PRIVATE=$UPLOADCARE_PRIVATE UPLOADCARE_PUBLIC=$UPLOADCARE_PUBLIC YELP_AUTH=$YELP_AUTH npm run dev"
+                        return id of window 1
+                    end tell
+EOF
+                )
+                store_terminal_id "$window_id"
+                ;;
+        esac
     done
 }
 
@@ -253,6 +321,34 @@ display_countdown_and_menu() {
 
 # Main script execution
 
+# Clear screen and show project selection menu
+clear
+echo -e "\nResman Development Environment Setup"
+echo -e "===================================="
+
+# Project selection menu
+echo -e "\nSelect projects to start:"
+echo "1) zeki (dashboard) - Meteor app"
+echo "2) myrazz-ssr - Next.js SSR app"
+echo "3) zeki-v2 (serverless) - Serverless functions"
+echo "4) All projects"
+echo "5) No dev servers (apps only)"
+read -p "Enter project choice(s) separated by spaces (e.g., 1 3): " project_choices
+
+# Parse project selections
+selected_projects=()
+if [[ " $project_choices " =~ " 4 " ]]; then
+    selected_projects=("zeki" "myrazz-ssr" "zeki-v2")
+else
+    for choice in $project_choices; do
+        case $choice in
+            1) selected_projects+=("zeki") ;;
+            2) selected_projects+=("myrazz-ssr") ;;
+            3) selected_projects+=("zeki-v2") ;;
+        esac
+    done
+fi
+
 # Get duration with default value of 30 minutes
 read -p "Enter duration in minutes before auto-close [Press Enter for no auto-close]: " duration
 
@@ -263,17 +359,53 @@ if [ -n "$duration" ]; then
     end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
 fi
 
+# Clean up ports before starting
+if [ ${#selected_projects[@]} -gt 0 ]; then
+    echo "Cleaning up ports and existing processes..."
+    check_and_kill_ports
+fi
+
+# Start the dev servers for selected projects
+if [ ${#selected_projects[@]} -gt 0 ]; then
+    echo "Starting dev servers..."
+    start_dev_servers "${selected_projects[@]}"
+    
+    # Wait a bit for the dev servers to start
+    echo "Waiting for dev servers to initialize..."
+    sleep 5
+fi
+
+# Determine Chrome URLs based on selected projects
+chrome_urls=()
+chrome_urls+=("https://github.com/razzinteractive/zeki/pulls")
+chrome_urls+=("https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49")
+
+# Add localhost URLs based on selected projects
+for project in "${selected_projects[@]}"; do
+    case $project in
+        "zeki")
+            chrome_urls+=("http://localhost:4000/")  # Dashboard runs on port 4000
+            chrome_urls+=("http://localhost:3000/")  # Frontend runs on port 3000
+            ;;
+        "myrazz-ssr")
+            chrome_urls+=("http://localhost:3000/")  # Editor workspace
+            ;;
+        "zeki-v2")
+            chrome_urls+=("http://localhost:3005/")  # Serverless functions
+            ;;
+    esac
+done
+
 # Open Chrome profile with specified URLs
 echo "Starting Chrome with specified URLs..."
 profile_path="Profile 12"
-open_chrome "$profile_path" \
-    "http://localhost:4000/" \
-    "https://github.com/razzinteractive/zeki/pulls" \
-    "https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49" \
+if [ ${#chrome_urls[@]} -gt 0 ]; then
+    open_chrome "$profile_path" "${chrome_urls[@]}"
+fi
 
 # Open specified applications
 echo "Starting applications..."
-apps=("Sublime Text" "Studio 3T" "Github Desktop" "Slack" "Microsoft Teams" "PhpStorm")
+apps=("Github Desktop" "Slack" "Microsoft Teams" "Obsidian" "Cursor")
 open_apps "${apps[@]}"
 
 # Only start countdown and menu display if duration was provided
@@ -291,5 +423,3 @@ else
     fi
     clear
 fi
-
-# TODO: Start dev server and get it from VSC Run terminal script
