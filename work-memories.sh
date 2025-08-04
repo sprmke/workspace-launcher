@@ -339,7 +339,7 @@ while true; do
     echo "1) ui-memories (localhost:3000)"
     echo "2) memories-website (localhost:3001)"
     echo "3) memories (localhost:3000)"
-    echo "4) futuremefinance (localhost:8080 + external URLs)"
+    echo "4) futuremefinance (localhost:8080)"
     echo "5) All projects"
     echo "6) No dev servers"
     read -p "Enter project choice(s) separated by spaces (e.g., 1 3 4): " project_choices
