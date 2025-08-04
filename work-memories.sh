@@ -3,6 +3,7 @@
 # Global variables for timer management
 end_time=0
 timer_pid=""
+TERMINAL_WINDOW_IDS=()
 
 # Function to clear previous lines
 clear_lines() {
@@ -10,6 +11,32 @@ clear_lines() {
     for ((i=0; i<lines; i++)); do
         echo -en "\033[1A\033[2K"
     done
+}
+
+# Cleanup function to be called on script exit
+cleanup() {
+    rm -f /tmp/dev_terminal_ids
+}
+
+# Set up trap for cleanup
+trap cleanup EXIT
+
+# Function to store terminal window IDs
+store_terminal_id() {
+    local window_id=$1
+    if [ ! -z "$window_id" ]; then
+        TERMINAL_WINDOW_IDS+=("$window_id")
+        echo "$window_id" >> /tmp/dev_terminal_ids
+    fi
+}
+
+# Function to load stored terminal IDs
+load_terminal_ids() {
+    if [ -f "/tmp/dev_terminal_ids" ]; then
+        while IFS= read -r id; do
+            TERMINAL_WINDOW_IDS+=("$id")
+        done < "/tmp/dev_terminal_ids"
+    fi
 }
 
 # Function to validate duration and convert to seconds
@@ -24,14 +51,83 @@ validate_duration() {
     fi
 }
 
+# Function to check and kill processes on specific ports
+check_and_kill_ports() {
+    echo "Checking and cleaning up ports..."
+    
+    # Kill any existing pnpm and npm processes first
+    if pgrep -f "pnpm dev" > /dev/null; then
+        echo "Killing existing pnpm dev processes..."
+        pkill -f "pnpm dev"
+        sleep 2
+    fi
+    
+    if pgrep -f "npm run dev" > /dev/null; then
+        echo "Killing existing npm run dev processes..."
+        pkill -f "npm run dev"
+        sleep 2
+    fi
+
+    if pgrep -f "sst dev" > /dev/null; then
+        echo "Killing existing sst dev processes..."
+        pkill -f "sst dev"
+        sleep 2
+    fi
+
+    # Check and kill processes on specific ports (including common dev server ports)
+    for port in 3000 3001 5173 8080; do
+        if lsof -i :$port > /dev/null; then
+            echo "Port $port is in use. Killing existing process..."
+            kill $(lsof -ti :$port)
+            sleep 1
+        fi
+    done
+}
+
+# Function to close specific terminal windows
+close_dev_terminals() {
+    # First kill any running dev processes
+    pkill -f "pnpm dev"
+    pkill -f "npm run dev"
+    pkill -f "sst dev"
+    
+    # Small delay to ensure processes are terminated
+    sleep 1
+    
+    # Load any stored terminal IDs
+    load_terminal_ids
+
+    for window_id in "${TERMINAL_WINDOW_IDS[@]}"; do
+        if [ ! -z "$window_id" ]; then
+            osascript <<EOF
+                tell application "Terminal"
+                    try
+                        repeat with w in windows
+                            try
+                                if id of w is $window_id then
+                                    close w saving no
+                                end if
+                            end try
+                        end repeat
+                    end try
+                end tell
+EOF
+        fi
+    done
+    
+    # Clear the window IDs array and temp file
+    TERMINAL_WINDOW_IDS=()
+    rm -f /tmp/dev_terminal_ids
+}
+
 # Function to close applications
 close_apps() {
-    # Close the specific terminal window first
-    close_dev_terminal
+    # Close the terminal windows first
+    close_dev_terminals
 
     local profile_path=$1
     
-    # Close Chrome windows // TODO: Close specific profile only
+    # Close Chrome windows
     osascript -e "tell application \"Google Chrome\" to quit"
     
     # Close other applications if provided
@@ -40,8 +136,10 @@ close_apps() {
         osascript -e "tell application \"$app\" to quit"
     done
 
-    # Kill the dev server process
+    # Kill all dev server processes
     pkill -f "pnpm dev"
+    pkill -f "npm run dev"
+    pkill -f "sst dev"
 }
 
 # Function to open Chrome with specific profile and URLs in a single window
@@ -76,37 +174,7 @@ open_apps() {
     done
 }
 
-# Add global variables to store terminal window IDs
-TERMINAL_WINDOW_ID_1=""
-TERMINAL_WINDOW_ID_2=""
 
-# Function to close specific terminal windows
-close_dev_terminal() {
-    if [ ! -z "$TERMINAL_WINDOW_ID_1" ]; then
-        osascript <<EOF
-            tell application "Terminal"
-                repeat with w in windows
-                    if id of w is $TERMINAL_WINDOW_ID_1 then
-                        close w
-                        exit repeat
-                    end if
-                end repeat
-            end tell
-EOF
-    fi
-    if [ ! -z "$TERMINAL_WINDOW_ID_2" ]; then
-        osascript <<EOF
-            tell application "Terminal"
-                repeat with w in windows
-                    if id of w is $TERMINAL_WINDOW_ID_2 then
-                        close w
-                        exit repeat
-                    end if
-                end repeat
-            end tell
-EOF
-    fi
-}
 
 # Function to focus terminal window
 focus_terminal() {
@@ -191,78 +259,76 @@ display_countdown_and_menu() {
     done
 }
 
-# Function to start dev server
-start_dev_server() {
+# Function to start dev servers
+start_dev_servers() {
     local selected_projects=("$@")
     
-    # Check if port 5173 is in use and kill the process if it exists
-    if lsof -i :5173 > /dev/null; then
-        echo "Port 5173 is in use. Killing existing process..."
-        kill $(lsof -ti :5173)
-        sleep 1
-    fi
-
-    # Initialize terminal window IDs
-    TERMINAL_WINDOW_ID_1=""
-    TERMINAL_WINDOW_ID_2=""
-    TERMINAL_WINDOW_ID_3=""
-    TERMINAL_WINDOW_ID_4=""
-
+    echo "Starting dev servers for selected projects..."
+    
     # Start selected projects
     for project in "${selected_projects[@]}"; do
         case $project in
             "ui-memories")
                 echo "Starting ui-memories..."
-                TERMINAL_WINDOW_ID_1=$(osascript <<EOF
+                window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set window1 to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && pnpm dev"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memorials-platform-monorepo/ui-memories && pnpm dev"
                         return id of window 1
                     end tell
 EOF
                 )
+                store_terminal_id "$window_id"
                 ;;
             "memories-website")
                 echo "Starting memories-website..."
-                TERMINAL_WINDOW_ID_2=$(osascript <<EOF
+                window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set window2 to do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memories-website && aws-vault exec mem-dev -- pnpm sst dev"
                         return id of window 1
                     end tell
 EOF
                 )
+                store_terminal_id "$window_id"
                 ;;
             "memories")
                 echo "Starting memories 2.0..."
-                TERMINAL_WINDOW_ID_3=$(osascript <<EOF
+                window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set window3 to do script "cd /Users/memories/Projects/memories-projects/memories && docker-compose up -d postgres && aws-vault exec mem-dev -- pnpm sst dev --stage michael && aws-vault exec mem-dev -- pnpm db push --stage michael"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/memories && docker-compose up -d postgres && aws-vault exec mem-dev -- pnpm sst dev --stage michael && aws-vault exec mem-dev -- pnpm db push --stage michael"
                         return id of window 1
                     end tell
 EOF
                 )
+                store_terminal_id "$window_id"
                 ;;
             "futuremefinance")
                 echo "Starting futuremefinance..."
-                TERMINAL_WINDOW_ID_4=$(osascript <<EOF
+                window_id=$(osascript <<EOF
                     tell application "Terminal"
                         activate
-                        set window4 to do script "cd /Users/memories/Projects/memories-projects/futuremefinance && npm run dev"
+                        set newWindow to do script "cd /Users/memories/Projects/memories-projects/futuremefinance && npm run dev"
                         return id of window 1
                     end tell
 EOF
                 )
+                store_terminal_id "$window_id"
                 ;;
         esac
     done
 }
 
+# Main script execution
+
 # Main script loop
 while true; do
-    # Get duration with default value of 30 minutes
+    # Clear screen and show project selection menu
     clear
+    echo -e "\nMemories Development Environment Setup"
+    echo -e "====================================="
+    
     echo -e "\nLaunch mode:"
     echo "1) Essential apps only"
     echo "2) All apps"
@@ -313,10 +379,20 @@ while true; do
     fi
     open_apps "${apps[@]}"
 
+    # Clean up ports before starting
+    if [ ${#selected_projects[@]} -gt 0 ]; then
+        echo "Cleaning up ports and existing processes..."
+        check_and_kill_ports
+    fi
+
     # Start the dev servers for selected projects
     if [ ${#selected_projects[@]} -gt 0 ]; then
-        echo "Starting dev servers for selected projects..."
-        start_dev_server "${selected_projects[@]}"
+        echo "Starting dev servers..."
+        start_dev_servers "${selected_projects[@]}"
+        
+        # Wait a bit for the dev servers to start
+        echo "Waiting for dev servers to initialize..."
+        sleep 5
     else
         echo "No dev servers selected."
     fi
