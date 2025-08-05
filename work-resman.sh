@@ -330,7 +330,7 @@ echo -e "===================================="
 echo -e "\nSelect projects to start:"
 echo "1) zeki"
 echo "2) myrazz-ssr"
-echo "3) zeki-v2 (serverless) - Serverless functions"
+echo "3) zeki-v2"
 echo "4) All projects"
 echo "5) No dev servers (apps only)"
 read -p "Enter project choice(s) separated by spaces (e.g., 1 3): " project_choices
