@@ -319,107 +319,146 @@ display_countdown_and_menu() {
     done
 }
 
-# Main script execution
+# Function to run the development environment setup
+run_development_environment() {
+    # Project selection menu
+    echo -e "\nSelect projects to start:"
+    echo "1) zeki"
+    echo "2) myrazz-ssr"
+    echo "3) zeki-v2"
+    echo "4) All projects"
+    echo "5) No dev servers (apps only)"
+    read -p "Enter project choice(s) separated by spaces (e.g., 1 3): " project_choices
 
-# Clear screen and show project selection menu
-clear
-echo -e "\nResman Development Environment Setup"
-echo -e "===================================="
+    # Parse project selections
+    selected_projects=()
+    if [[ " $project_choices " =~ " 4 " ]]; then
+        selected_projects=("zeki" "myrazz-ssr" "zeki-v2")
+    else
+        for choice in $project_choices; do
+            case $choice in
+                1) selected_projects+=("zeki") ;;
+                2) selected_projects+=("myrazz-ssr") ;;
+                3) selected_projects+=("zeki-v2") ;;
+            esac
+        done
+    fi
 
-# Project selection menu
-echo -e "\nSelect projects to start:"
-echo "1) zeki"
-echo "2) myrazz-ssr"
-echo "3) zeki-v2"
-echo "4) All projects"
-echo "5) No dev servers (apps only)"
-read -p "Enter project choice(s) separated by spaces (e.g., 1 3): " project_choices
+    # Get duration with default value of 30 minutes
+    read -p "Enter duration in minutes before auto-close [Press Enter for no auto-close]: " duration
 
-# Parse project selections
-selected_projects=()
-if [[ " $project_choices " =~ " 4 " ]]; then
-    selected_projects=("zeki" "myrazz-ssr" "zeki-v2")
-else
-    for choice in $project_choices; do
-        case $choice in
-            1) selected_projects+=("zeki") ;;
-            2) selected_projects+=("myrazz-ssr") ;;
-            3) selected_projects+=("zeki-v2") ;;
+    # Only proceed with timer if duration was provided
+    if [ -n "$duration" ]; then
+        duration_seconds=$(validate_duration "$duration")
+        # Set initial end time using bc for calculation
+        end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
+    fi
+
+    # Clean up ports before starting
+    if [ ${#selected_projects[@]} -gt 0 ]; then
+        echo "Cleaning up ports and existing processes..."
+        check_and_kill_ports
+    fi
+
+    # Start the dev servers for selected projects
+    if [ ${#selected_projects[@]} -gt 0 ]; then
+        echo "Starting dev servers..."
+        start_dev_servers "${selected_projects[@]}"
+        
+        # Wait a bit for the dev servers to start
+        echo "Waiting for dev servers to initialize..."
+        sleep 5
+    fi
+
+    # Determine Chrome URLs based on selected projects
+    chrome_urls=()
+    chrome_urls+=("https://github.com/razzinteractive/zeki/pulls")
+    chrome_urls+=("https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49")
+
+    # Add localhost URLs based on selected projects
+    for project in "${selected_projects[@]}"; do
+        case $project in
+            "zeki")
+                chrome_urls+=("http://localhost:4000/")  # Dashboard runs on port 4000
+                chrome_urls+=("http://localhost:3000/")  # Frontend runs on port 3000
+                ;;
+            "myrazz-ssr")
+                chrome_urls+=("http://localhost:3000/")  # Editor workspace
+                ;;
+            "zeki-v2")
+                chrome_urls+=("http://localhost:3005/")  # Serverless functions
+                ;;
         esac
     done
-fi
 
-# Get duration with default value of 30 minutes
-read -p "Enter duration in minutes before auto-close [Press Enter for no auto-close]: " duration
-
-# Only proceed with timer if duration was provided
-if [ -n "$duration" ]; then
-    duration_seconds=$(validate_duration "$duration")
-    # Set initial end time using bc for calculation
-    end_time=$(echo "$(date +%s) + $duration_seconds" | bc)
-fi
-
-# Clean up ports before starting
-if [ ${#selected_projects[@]} -gt 0 ]; then
-    echo "Cleaning up ports and existing processes..."
-    check_and_kill_ports
-fi
-
-# Start the dev servers for selected projects
-if [ ${#selected_projects[@]} -gt 0 ]; then
-    echo "Starting dev servers..."
-    start_dev_servers "${selected_projects[@]}"
-    
-    # Wait a bit for the dev servers to start
-    echo "Waiting for dev servers to initialize..."
-    sleep 5
-fi
-
-# Determine Chrome URLs based on selected projects
-chrome_urls=()
-chrome_urls+=("https://github.com/razzinteractive/zeki/pulls")
-chrome_urls+=("https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49")
-
-# Add localhost URLs based on selected projects
-for project in "${selected_projects[@]}"; do
-    case $project in
-        "zeki")
-            chrome_urls+=("http://localhost:4000/")  # Dashboard runs on port 4000
-            chrome_urls+=("http://localhost:3000/")  # Frontend runs on port 3000
-            ;;
-        "myrazz-ssr")
-            chrome_urls+=("http://localhost:3000/")  # Editor workspace
-            ;;
-        "zeki-v2")
-            chrome_urls+=("http://localhost:3005/")  # Serverless functions
-            ;;
-    esac
-done
-
-# Open Chrome profile with specified URLs
-echo "Starting Chrome with specified URLs..."
-profile_path="Default"
-if [ ${#chrome_urls[@]} -gt 0 ]; then
-    open_chrome "$profile_path" "${chrome_urls[@]}"
-fi
-
-# Open specified applications
-echo "Starting applications..."
-apps=("Github Desktop" "Slack" "Microsoft Teams" "Obsidian" "Cursor")
-open_apps "${apps[@]}"
-
-# Only start countdown and menu display if duration was provided
-if [ -n "$duration" ]; then
-    display_countdown_and_menu "$profile_path" "${apps[@]}"
-else
-    echo -e "\nNo auto-close timer set. Applications will remain open."
-    echo "1) Keep apps open and return to main menu"
-    echo "2) Close all apps and return to main menu"
-    read -p "Enter choice (1-2): " choice
-    
-    if [ "$choice" = "2" ]; then
-        echo -e "\nClosing applications..."
-        close_apps "$profile_path" "${apps[@]}"
+    # Open Chrome profile with specified URLs
+    echo "Starting Chrome with specified URLs..."
+    profile_path="Default"
+    if [ ${#chrome_urls[@]} -gt 0 ]; then
+        open_chrome "$profile_path" "${chrome_urls[@]}"
     fi
-    clear
-fi
+
+    # Open specified applications
+    echo "Starting applications..."
+    apps=("Github Desktop" "Slack" "Microsoft Teams" "Obsidian" "Cursor")
+    open_apps "${apps[@]}"
+
+    # Only start countdown and menu display if duration was provided
+    if [ -n "$duration" ]; then
+        display_countdown_and_menu "$profile_path" "${apps[@]}"
+    else
+        echo -e "\nNo auto-close timer set. Applications will remain open."
+        echo "1) Keep apps open and return to main menu"
+        echo "2) Close all apps and return to main menu"
+        read -p "Enter choice (1-2): " choice
+        
+        case "$choice" in
+            1)
+                echo -e "\nKeeping applications open..."
+                echo "Applications will continue running. You can close them manually when needed."
+                return 0  # Return to main menu
+                ;;
+            2)
+                echo -e "\nClosing applications..."
+                close_apps "$profile_path" "${apps[@]}"
+                return 0  # Return to main menu
+                ;;
+            *)
+                echo -e "\nInvalid choice. Keeping applications open by default."
+                return 0  # Return to main menu
+                ;;
+        esac
+    fi
+}
+
+# Main script execution with menu loop
+main_menu() {
+    while true; do
+        clear
+        echo -e "\nResman Development Environment Setup"
+        echo -e "===================================="
+        echo -e "\nMain Menu:"
+        echo "1) Start Development Environment"
+        echo "2) Exit"
+        read -p "Enter choice (1-2): " main_choice
+        
+        case "$main_choice" in
+            1)
+                run_development_environment
+                echo -e "\nPress any key to return to main menu..."
+                read -n 1 -s
+                ;;
+            2)
+                echo -e "\nExiting..."
+                exit 0
+                ;;
+            *)
+                echo -e "\nInvalid choice. Please try again."
+                sleep 2
+                ;;
+        esac
+    done
+}
+
+# Start the main menu
+main_menu
