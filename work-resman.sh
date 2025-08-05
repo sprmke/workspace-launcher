@@ -372,6 +372,7 @@ run_development_environment() {
 
     # Determine Chrome URLs based on selected projects
     chrome_urls=()
+    chrome_urls+=("chrome-extension://chphlpgkkbolifaimnlloiipkdnihall/onetab.html")
     chrome_urls+=("https://github.com/razzinteractive/zeki/pulls")
     chrome_urls+=("https://myresman.atlassian.net/jira/software/c/projects/RAZZ/boards/49")
 
