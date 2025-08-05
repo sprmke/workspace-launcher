@@ -328,7 +328,7 @@ echo -e "===================================="
 
 # Project selection menu
 echo -e "\nSelect projects to start:"
-echo "1) zeki (dashboard) - Meteor app"
+echo "1) zeki"
 echo "2) myrazz-ssr - Next.js SSR app"
 echo "3) zeki-v2 (serverless) - Serverless functions"
 echo "4) All projects"
