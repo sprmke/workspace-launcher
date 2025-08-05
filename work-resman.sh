@@ -398,7 +398,7 @@ done
 
 # Open Chrome profile with specified URLs
 echo "Starting Chrome with specified URLs..."
-profile_path="Profile 12"
+profile_path="Default"
 if [ ${#chrome_urls[@]} -gt 0 ]; then
     open_chrome "$profile_path" "${chrome_urls[@]}"
 fi
