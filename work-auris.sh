@@ -24,7 +24,7 @@ validate_duration() {
     fi
 }
 
-# Function to close applications
+# Close applications
 close_apps() {
     # Close the specific terminal window first
     close_dev_terminal
