@@ -51,7 +51,7 @@ validate_duration() {
     fi
 }
 
-# Function to check and kill processes on specific ports
+# Check and kill processes on specific ports
 check_and_kill_ports() {
     echo "Checking and cleaning up ports..."
     
