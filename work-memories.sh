@@ -30,7 +30,7 @@ store_terminal_id() {
     fi
 }
 
-# Function to load stored terminal IDs
+# Load stored terminal IDs
 load_terminal_ids() {
     if [ -f "/tmp/dev_terminal_ids" ]; then
         while IFS= read -r id; do
