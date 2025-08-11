@@ -21,7 +21,7 @@ cleanup() {
 # Set up trap for cleanup
 trap cleanup EXIT
 
-# Function to store terminal window IDs
+# Store terminal window IDs
 store_terminal_id() {
     local window_id=$1
     if [ ! -z "$window_id" ]; then
