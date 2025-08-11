@@ -39,7 +39,7 @@ load_terminal_ids() {
     fi
 }
 
-# Function to validate duration and convert to seconds
+# Validate duration and convert to seconds
 validate_duration() {
     local input=$1
     # Check if input is a valid number (integer or float)
