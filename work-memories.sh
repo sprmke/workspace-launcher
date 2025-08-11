@@ -84,7 +84,7 @@ check_and_kill_ports() {
     done
 }
 
-# Function to close specific terminal windows
+# Close specific terminal windows
 close_dev_terminals() {
     # First kill any running dev processes
     pkill -f "bun dev"
